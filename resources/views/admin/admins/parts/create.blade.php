@@ -40,28 +40,6 @@
             <input type="password" class="form-control" name="password" id="password">
         </div>
 
-
-
-
-        <div class="form-group" id="job">
-            <label for="email" class="form-control-label">{{trans('admin.job_id')}}</label>
-            <input type="number" class="form-control" name="job_id" id="job_id">
-        </div>
-
-
-
-
-
-        <div class="form-group">
-            <label class="form-label">{{trans('admin.user_type')}}</label>
-            <select name="user_type" id="type" class="form-control select2" data-placeholder="Choose user type">
-                @foreach($types as $type)
-                    <option value="{{$type}}">{{$type}}</option>
-                @endforeach
-            </select>
-        </div>
-
-
         {{--end create model--}}
 
         <div class="modal-footer">

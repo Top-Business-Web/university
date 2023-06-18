@@ -35,8 +35,6 @@
                                 <th class="min-w-50px">{{trans('admin.first_name')}}</th>
                                 <th class="min-w-125px">{{trans('admin.last_name')}}</th>
                                 <th class="min-w-125px">{{trans('admin.email')}}</th>
-                                <th class="min-w-125px">{{trans('admin.user_type')}}</th>
-                                <th class="min-w-125px">{{trans('admin.job_id')}}</th>
                                 <th class="min-w-125px">{{trans('admin.action')}}</th>
                             </tr>
 
@@ -100,8 +98,6 @@
             {data: 'first_name', name: 'first_name'},
             {data: 'last_name', name: 'last_name'},
             {data: 'email', name: 'email'},
-            {data: 'user_type', name: 'user_type'},
-            {data: 'job_id', name: 'job_id'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
 

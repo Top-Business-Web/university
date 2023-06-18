@@ -17,10 +17,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    use HasTranslations;
-
-    public $translatable = ['city','birthday_place'];
-
     /**
      * The attributes that are mass assignable.
      *
@@ -30,20 +26,6 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'image',
-        'points',
-        'university_email',
-        'identifier_id',
-        'national_id',
-        'national_number',
-        'nationality',
-        'birthday_date',
-        'birthday_place',
-        'city',
-        'address',
-        'user_status',
-        'user_type',
-        'job_id',
-        'university_register_year',
         'email',
         'password',
     ];

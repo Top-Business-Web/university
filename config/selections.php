@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'select1' => "Transportation Method",
+    'select2' => "Scenario Selection",
+    'select3' => "Offshore Wind Park",
+    'select4' => "Operating Time Wind Park [A]",
+    'select5' => "Turbine Type",
+    'select6' => "Electrolysis Type",
+    'select7' => "Electrolysis Capacity Factor[%]",
+    'select8' => "Electrolysis Full Load Operation Time [H]",
+    'select9' => "Electrolysis Construction Year",
+    'select10' => "Pressure Output",
+    'select11' => "Compressor - Operating Time [A]",
+    'select12' => "Operating Time - Storage [A]",
+    'select13' => "Storage Type",
+    'select14' => "Customer Location",
+    'select15' => "Offshore Port Location",
+    'select16' => "Inland Port Location",
+    'select17' => "Starting Point - Train",
+    'select18' => "Starting Point - Truck",
+    'select19' => "Starting Point - Pipeline",
+    'select20' => "Operating Time Hydrogen Transporting Ship",
+    'select21' => "Operating Time Of The Transport Containers",
+    'select22' => "Size Of The Transport Containers [Ft]",
+    'select23' => "Safety Factor Of The Transport Containers [%]",
+];

@@ -17,20 +17,11 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
-    public function indexStudent()
-    {
-        if (Auth::guard('web')->check()) {
-            return redirect('admin');
-        }
-        return view('admin.auth.login-student');
-    }
-
     public function login(Request $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->validate([
             'email' => 'required|exists:users',
             'password' => 'required',
-            'user_type' => 'required'
         ], [
             'email.exists' => trans('login.This mail is not registered'),
             'email.required' => trans('login.Please enter your e-mail'),
@@ -44,14 +35,9 @@ class LoginController extends Controller
 
     public function logout()
     {
-        if (\auth()->user()->user_type !== 'student') {
+
             Auth::logout();
             return redirect()->route('admin.login');
-        } else {
-            Auth::logout();
-            return redirect()->route('student.login');
-        }
-
     }
 
 }//end class

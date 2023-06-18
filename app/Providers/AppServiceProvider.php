@@ -31,11 +31,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('settings',Setting::first());
-        View::share('categories',Category::all());
-        View::share('advertisements', Advertisement::latest()->take(3)->get());
-        View::share('university_settings',UniversitySetting::all());
-        View::share('pages',Page::where('category_id', '=', '8')->get());
         Schema::defaultStringLength(191);
     }
 }

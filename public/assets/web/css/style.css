@@ -1,0 +1,423 @@
+:root{
+    --main-color: #080d1c;
+    --green-color: #019992;
+    --orange-color: #FC8F14;
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+    direction: ltr;
+    padding: 0;
+    margin: 0;
+}
+
+h1,h2,h3,h4,h5,p,span,a,label,li{
+    text-transform: capitalize;
+}
+li,p{
+    color: #03060d;
+}
+button{
+    text-transform: capitalize;
+}
+h5{
+    color: var(--main-color);
+}
+.text-color{
+    color: var(--green-color);
+}
+
+.breadcrumb{
+    background-image: url(../photo/1.jpg);
+    background-size: cover;
+    background-position: center;
+    min-height: 450px;
+}
+ .padding{
+    padding-top: 90px;
+ }
+/* navbar */
+
+.navbar img{
+    height: 80px;
+}
+
+.heading h1{
+    color: var(--main-color);
+    max-width: 800px;
+}
+
+/* start page */
+
+h2{
+    color: var(--green-color);
+    font-weight: bold;
+}
+.form-check-input{
+    width: 15px;
+    height: 15px;
+    border: 2px solid gainsboro;
+}
+.form-check-input:checked,
+.form-select::selection{
+    background-color: var(--green-color);
+    box-shadow: none;
+    border: none;
+}
+.form-check-input[type=checkbox]{
+    border-radius: 0;
+}
+
+.main-btn{
+    background-color: var(--green-color);
+    color: white;
+    padding: 10px 44px;
+    border: none;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+.main-btn::before{
+    content: "";
+    transition-duration: 400ms;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: -25px;
+    bottom: -18px;
+    border-radius: 50%;
+    z-index: 1;
+    opacity: 0.15;
+    background-color: white;
+}
+
+.main-btn:hover::before{
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    right: 0;
+    bottom: 0;
+}
+.btn2{
+    background-color: var(--orange-color);
+}
+.btn2::before{
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    right: 0;
+    bottom: 0;
+}
+.btn2:hover::before{
+    width: 50px;
+    height: 50px;
+    right: -25px;
+    bottom: -18px;
+    border-radius: 50%;
+}
+
+/* continue tab */
+
+.form-control:focus,
+.form-select:focus{
+    box-shadow: none;
+    outline: none;
+    border: 1px solid var(--green-color);
+}
+
+.content-list > div:not(:first-child){
+    display: none;
+}
+
+.progress-line{
+    display: flex;
+    margin: 20px 0;
+}
+.progress-line .step{
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+.progress-line .step p{
+    font-size: 20px;
+    font-weight: bold;
+    color: gray;
+    transition: 0.2s;
+}
+.progress-line .step p.active{
+    color: var(--green-color);
+}
+.progress-line .step .check{
+    position: absolute;
+    left: 48%;
+    top: 63%;
+    font-size: 15px;
+    display: none;
+}
+.progress-line .step .check.active{
+    display: block;
+    color: white;
+}
+.progress-line .step .bullet.active span{
+    display: none;
+}
+.progress-line .step .bullet{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    background-color: gainsboro;
+    color: white;
+    border-radius: 50%;
+    position: relative;
+    transition: 0.2s;
+}
+.progress-line .step .bullet.active{
+    border-color: var(--green-color);
+    background-color: var(--green-color);
+}
+.progress-line .step .bullet::before,
+.progress-line .step .bullet::after{
+    content: "";
+    width: 240px;
+    height: 3px;
+    background-color: gainsboro;
+    position: absolute;
+    bottom: 11px;
+    right: -245px;
+}
+.progress-line .step:last-child .bullet::before,
+.progress-line .step:last-child .bullet::after{
+    display: none;
+}
+@media (max-width:1200px) {
+    .progress-line .step .bullet::before,
+    .progress-line .step .bullet::after{
+        width: 200px;
+        right: -205px;
+    }
+}
+@media (max-width:992px) {
+    .progress-line .step .bullet::before,
+    .progress-line .step .bullet::after{
+        width: 140px;
+        right: -145px;
+    }
+    .progress-line .step .check{
+        left: 46%;
+        top: 58%;
+    }
+    .progress-line .step p{
+        font-size: 15px;
+    }
+}
+@media (max-width:768px) {
+    .progress-line .step .bullet::before,
+    .progress-line .step .bullet::after{
+        width: 100px;
+        right: -105px;
+    }
+    .progress-line .step .check{
+        left: 45%;
+        top: 66%;
+    }
+}
+@media (max-width:550px) {
+    .progress-line .step .bullet::before,
+    .progress-line .step .bullet::after{
+        width: 50px;
+        right: -55px;
+    }
+    .progress-line .step .check{
+        left: 43%;
+    }
+}
+.progress-line .step .bullet.active::after{
+    background-color: var(--green-color);
+    transform: scalex(0);
+    transform-origin: left;
+    animation: animateProgress 0.3s linear forwards;
+}
+@keyframes animateProgress {
+    100%{
+        transform: scaleX(1);
+    }
+}
+
+.form-outer{
+    overflow: hidden;
+}
+.form-outer .form{
+    display: flex;
+    width: 400%;
+}
+.form-outer .form .page{
+    width: 25%;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.form-outer .page .form-label{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.icon-footer li{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: var(--orange-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
+}
+.icon-footer li a{
+    color: white;
+}
+.icon-footer li:hover{
+    background-color: var(--green-color);
+}
+.footer{
+    background-color: var(--main-color);
+}
+
+.disabled {
+    background-color: gainsboro;
+    color: grey;
+    padding: 10px 44px;
+    border: none;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+.__range input
+{
+    outline: none;
+    -webkit-appearance: none;
+    background-color: #aaa;
+    height: 3px;
+    width: 100%;
+    margin: 10px auto;
+}
+.__range input::-webkit-slider-thumb
+{
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #019992;
+    border-radius: 50%;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.__range input::-moz-range-thumb
+{
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #019992;
+    border-radius: 50%;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.__range input::-ms-thumb
+{
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #019992;
+    border-radius: 50%;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.__range-step{
+    position: relative;
+}
+
+.__range-max{
+    float: right;
+}
+.__range-step input::-webkit-slider-thumb
+{
+    background: transparent;
+}
+.__range-step input::-moz-range-thumb
+{
+    background: transparent;
+}
+.__range-step input::-ms-thumb
+{
+    background: transparent;
+}
+.__range-step datalist {
+    position:relative;
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    bottom: 16px;
+    /* disable text selection */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    /* disable click events */
+    pointer-events:none;
+}
+.__range-step datalist option {
+    width: 10px;
+    height: 10px;
+    min-height: 10px;
+    border-radius: 100px;
+    /* hide text */
+    white-space: nowrap;
+    padding:0;
+    line-height: 40px;
+}
+
+
+.__range-step-popup output
+{
+    position: absolute;
+    background-color: #019992;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    border-radius: 100px;
+    display: inline-block;
+    font-size:12px;
+    bottom: 100%;
+    left: 0;
+    vertical-align: middle;
+    line-height: 30px;
+}
+.__range-step-popup .__range-output-square{
+    padding: 0 5px;
+    min-width: 25px;
+    width: auto !important;
+    border-radius: 5px !important;
+}
+.__range-step-popup output:after
+{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 10px solid #019992;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    top: 90%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -1px;
+}
+.__range-step-popup datalist{
+    overflow:hidden;
+}
+.__range-step{
+    margin:0 40px;
+}
+.__range-step-popup{
+    margin:40px 40px;
+}

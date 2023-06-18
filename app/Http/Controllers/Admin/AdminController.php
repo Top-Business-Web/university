@@ -20,21 +20,25 @@ class AdminController extends Controller
     {
 
         if ($request->ajax()) {
-            $admins = User::query()
-                ->where('user_type','!=','student')
-                ->latest()
-                ->get();
+            $admins = User::latest()->get();
 
             return Datatables::of($admins)
                 ->addColumn('action', function ($admin) {
-                    return '
+                    if ($admin->id == 1){
+                        return '
+                            <button type="button" data-id="' . $admin->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>
+
+                       ';
+                    } else {
+                        return '
                             <button type="button" data-id="' . $admin->id . '" class="btn btn-pill btn-info-light editBtn"><i class="fa fa-edit"></i></button>
                             <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
                                     data-id="' . $admin->id . '" data-title="' . $admin->first_name . '">
                                     <i class="fas fa-trash"></i>
-                                    حذف الادمن
                             </button>
                        ';
+                    }
+
                 })
                 ->editColumn('image', function ($admin) {
 
@@ -88,10 +92,7 @@ class AdminController extends Controller
 
     public function create()
     {
-
-        $types = ['doctor','employee','manger','factor'];
-
-        return view('admin.admins.parts.create', compact('types'));
+        return view('admin.admins.parts.create');
     }
 
     public function store(Request $request): JsonResponse
@@ -102,14 +103,12 @@ class AdminController extends Controller
             'last_name' => 'required',
             'password' => 'required|min:6',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif',
-            'user_type' => 'required|in:doctor,manger,employee,factor',
-            'job_id' => 'nullable|unique:users,job_id',
         ]);
 
 
         if ($image = $request->file('image')) {
 
-            $destinationPath = 'users/';
+            $destinationPath = 'uploads/users/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $request['image'] = "$profileImage";
@@ -122,8 +121,6 @@ class AdminController extends Controller
             'image' => $profileImage ?? null,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'user_type' => $request->user_type,
-            'job_id' => $request->job_id,
 
         ]);
 
@@ -140,10 +137,7 @@ class AdminController extends Controller
 
     public function edit(User $admin)
     {
-
-        $types = ['doctor','employee','manger','factor'];
-
-        return view('admin.admins.parts.edit', compact('admin','types'));
+        return view('admin.admins.parts.edit', compact('admin'));
     }
 
 
@@ -161,13 +155,11 @@ class AdminController extends Controller
             'last_name' => 'required',
             'password' => 'nullable|min:6',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif',
-            'user_type' => 'required|in:doctor,manger,employee,factor',
-            'job_id' => 'nullable|unique:users,job_id,'. $request->id,
         ]);
 
         if ($image = $request->file('image')) {
 
-            $destinationPath = 'users/';
+            $destinationPath = 'uploads/users/';
             $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($destinationPath, $profileImage);
             $request['image'] = "$profileImage";
@@ -178,11 +170,8 @@ class AdminController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'image' => $request->image != null ? $profileImage : $admin->image,
-            'national_id' => $request->national_id,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'job_id' => $request->job_id,
-
         ]);
 
         if($admin->save()){
@@ -198,8 +187,7 @@ class AdminController extends Controller
     public function profile(Request $request)
     {
         $user = User::find(auth()->user()->id);
-        $user_data = DataModification::where('user_id', $user->id)->get();
 
-        return view('admin.admins.profile',compact('user','user_data'));
+        return view('admin.admins.profile',compact('user'));
     }
 }//end class

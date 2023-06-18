@@ -4,13 +4,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 
-if (!function_exists('checkUser')){
-    function checkUser($user): bool
-    {
-        return auth()->user()->user_type == $user;
-    }
-}
-
 if (!function_exists('saveFile')) {
     function saveFile($photo,$folder)
     {
@@ -91,37 +84,6 @@ if (!function_exists('get_user_file')) {
         }
     }
 }
-if (!function_exists('userCount')) {
-    function userCount() {
-        $count = DB::table('users')->where('user_type', 'student')->count();
-        return $count;
-    }
-}
-if (!function_exists('doctorCount')) {
-    function doctorCount() {
-        $count = DB::table('users')->where('user_type', 'doctor')->count();
-        return $count;
-    }
-}
-if (!function_exists('adminCount')) {
-    function adminCount() {
-        $count = DB::table('users')->where('user_type', 'manger')->count();
-        return $count;
-    }
-}
-if (!function_exists('departmentCount')) {
-    function departmentCount() {
-        $count = DB::table('departments')->count();
-        return $count;
-    }
-}
-if (!function_exists('branchCount')) {
-    function branchCount() {
-        $count = DB::table('department_branches')->count();
-        return $count;
-    }
-}
-
 
 if (!function_exists('get_file')) {
     function get_file($image) {

@@ -50,53 +50,9 @@
             passwordErr.addClass('d-none');
     })
 
-    $(document).on('click', '.btnLogin-student', function () {
-        let email = $('input[name="email"]').val();
-        let password = $('input[name="password"]').val();
-        let type = $('input[name="user_type"]').val();
-        let emailErr = $('.email-error');
-        let passwordErr = $('.password-error');
-
-        if (email == '') {
-            emailErr.removeClass('d-none');
-        } else if (password == '') {
-            passwordErr.removeClass('d-none');
-        } else {
-            $.ajax({
-                method: 'POST',
-                url: '{{ route('login') }}',
-                data: {
-                    '_token': '{{ csrf_token() }}',
-                    'email': email,
-                    'password': password,
-                    'user_type': type,
-                }, success: function (data) {
-                    if (data === 200) {
-                        toastr.success('{{ trans('login.Logged in successfully') }}');
-                        setTimeout(function () {
-                            location.href = '{{ route('admin.home') }}';
-                        },2000)
-                    } else if (data === 405) {
-                        toastr.error('{{ trans('login.The email or password is incorrect') }}');
-                    }
-                }, error: function (data) {
-                    var errors = $.parseJSON(data.responseText);
-                    $.each(errors, function (key, value) {
-                        if ($.isPlainObject(value)) {
-                            $.each(value, function (key, value) {
-                                toastr.error(value, '{{ trans('login.Error') }}');
-                            });
-                        }
-                    });
-                }
-            })
-        }
-    })
-
     $(document).on('click', '.btnLogin', function () {
         let email = $('input[name="email"]').val();
         let password = $('input[name="password"]').val();
-        let type = $('select[name="user_type"]').val();
         let emailErr = $('.email-error');
         let passwordErr = $('.password-error');
 
@@ -112,7 +68,6 @@
                     '_token': '{{ csrf_token() }}',
                     'email': email,
                     'password': password,
-                    'user_type': type,
                 }, success: function (data) {
                     if (data === 200) {
                         toastr.success('{{ trans('login.Logged in successfully') }}');

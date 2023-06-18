@@ -52,9 +52,6 @@
                                 </g>
                             </svg>
                             <h2 class="brand-text text-primary ml-1">@lang('login.Login Page')</h2>
-                            <button data-url="{{ LaravelLocalization::getLocalizedURL('en') }}" class="brand-text ml-1 btn btn-sm btn-primary langBtn">English</button>
-                            <button data-url="{{ LaravelLocalization::getLocalizedURL('ar') }}" class="brand-text ml-1 btn btn-sm btn-primary langBtn">اللغة العربية</button>
-                            <button data-url="{{ LaravelLocalization::getLocalizedURL('fr') }}" class="brand-text ml-1 btn btn-sm btn-primary langBtn">Française</button>
                         </a>
                         <!-- /Brand logo-->
                         <!-- Left Text-->
@@ -70,16 +67,6 @@
                                 <h2 class="card-title font-weight-bold mb-1">@lang('login.welcome to ')</h2>
                                 <p class="card-text mb-2">@lang('login.Please sign-in to your account and start the adventure')</p>
                                 <form class="auth-login-form mt-2" method="POST">
-                                    <div class="form-group">
-                                        <label class="form-label" for="email">@lang('login.user_type')</label>
-                                        <select class="form-control" name="user_type">
-{{--                                            <option class="form-control" value="student">@lang('login.student')</option>--}}
-                                            <option class="form-control" value="doctor">@lang('login.doctor')</option>
-                                            <option class="form-control" value="manger">@lang('login.manger')</option>
-                                            <option class="form-control" value="employee">@lang('login.employee')</option>
-                                            <option class="form-control" value="factor">@lang('login.factor')</option>
-                                        </select>
-                                    </div>
                                     <div class="form-group">
                                         <label class="form-label" for="email">@lang('login.email')</label>
                                         <input class="form-control" id="email" type="text" name="email"

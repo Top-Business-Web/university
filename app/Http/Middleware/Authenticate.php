@@ -22,7 +22,7 @@ class Authenticate extends Middleware
                 return route('admin.login');
             else{
 //                toastInfo('يرجي تسجيل الدخول');
-                return route('/');
+                return route('admin.home');
             }
         }
     }
