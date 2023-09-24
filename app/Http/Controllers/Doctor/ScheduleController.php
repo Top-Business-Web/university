@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\CheckForbidden;
 use App\Models\Schedule;
 use App\Traits\PhotoTrait;
 use Illuminate\Http\Request;
@@ -11,6 +12,13 @@ use Yajra\DataTables\DataTables;
 class ScheduleController extends Controller{
 
     use PhotoTrait;
+
+
+    public function __construct()
+    {
+        $this->middleware(CheckForbidden::class);
+    }
+
     public function index(Request $request)
     {
         if($request->ajax()) {
