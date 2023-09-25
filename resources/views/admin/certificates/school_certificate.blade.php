@@ -163,7 +163,7 @@
                             </div>
                             <div class="d-flex justify-content-between mt-2">
                                 <span class="fs-5">السنة الدراسية</span>
-                                <span class="fw-bold">{{@$user->user_department->year}}</span>
+                                <span class="fw-bold">{{@$user->user_department->year}} | {{@$user->user_department->year + 1}}</span>
                                 <span class="fs-5"> Annee scolaire</span>
                             </div>
                             <div class="d-flex justify-content-center mt-5 margin">
