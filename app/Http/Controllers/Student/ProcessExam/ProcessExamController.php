@@ -34,13 +34,6 @@ class ProcessExamController extends Controller{
 
                 ->addColumn('action', function ($process_exams) {
 
-//                    $deadline = Deadline::query()
-//                        ->where('year','=',period()->year_start)
-//                        ->where('period','=',period()->period)
-//                        ->where('deadline_type','=',0)
-//                        ->first();
-
-
                     if($process_exams->request_status == 'new'){
 
                         return '
@@ -98,7 +91,17 @@ class ProcessExamController extends Controller{
                 ->where('user_id','=',Auth::id())
                 ->count();
 
-            return view('student.process_exam.all_process_exams',compact('processExamCount'));
+
+            $deadline = Deadline::query()
+                ->where('deadline_type',0)
+                ->where('deadline_date_start','<=', Carbon::now())
+                ->where('deadline_date_end','>=', Carbon::now())
+                ->where('year','=',period()->year_start)
+                ->where('period','=', period()->period)
+                ->count();
+
+
+            return view('student.process_exam.all_process_exams',compact('processExamCount','deadline'));
         }
     }
 

@@ -30,7 +30,7 @@ class DeadlineController extends Controller
                 })
                 ->editColumn('deadline_type', function ($deadlines) {
 
-                    if($deadlines->deadline_type == 1){
+                    if($deadlines->deadline_type == 0){
 
                         return trans('deadline.process_exam');
                     }else{
