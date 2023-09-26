@@ -268,9 +268,9 @@ class ProcessDegreeController extends Controller
             ->where('id', $request->id)
             ->first();
 
-        if ($inputs->exam_degree < $request->studentDegree) {
-            return response()->json(['code' => 505]);
-        } else {
+        // if ($inputs->exam_degree < $request->studentDegree) {
+        //     return response()->json(['code' => 505]);
+        // } else {
             SubjectExamStudentResult::find($request->id)->update(['student_degree' => $request->studentDegree,]);
                   ProcessDegree::query()
                 ->where('id','=',$request->process_degree_id)
@@ -279,7 +279,7 @@ class ProcessDegreeController extends Controller
                     'processing_date' => Carbon::now()->format('Y-m-d')
                 ]);
             return response()->json(['code' => 200]);
-        }
+        // }
     }
 
     public function history()

@@ -45,7 +45,7 @@
                                     <th class="min-w-25px">{{trans('process_degree.period')}}</th>
                                     <th class="min-w-25px">{{trans('process_degree.year')}}</th>
                                     <th class="min-w-25px">{{trans('process_degree.section')}}</th>
-                                    <th class="min-w-25px">{{trans('process_degree.exam_code')}}</th>
+                                    <th class="min-w-25px">{{trans('admin.exam_code')}}</th>
                                     <th class="min-w-25px">{{trans('admin.doctor')}}</th>
                                     <th class="min-w-25px">{{trans('process_degree.student_degree_before_request')}}</th>
                                     <th class="min-w-25px">{{trans('process_degree.student_degree_after_request')}}</th>
