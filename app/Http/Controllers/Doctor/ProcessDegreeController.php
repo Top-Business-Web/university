@@ -29,24 +29,35 @@ class ProcessDegreeController extends Controller{
         if ($request->ajax()) {
             return Datatables::of($process_degrees)
 
-                ->editColumn('request_status', function ($process_degrees){
-
-                    if ($process_degrees->request_status === 'accept') {
-
-                        return  trans('admin.accept');
-                    }elseif ($process_degrees->request_status === 'refused'){
-
-                        return  trans('admin.refused');
-
-                    }elseif ($process_degrees->request_status === 'under_processing'){
-
-                        return trans('admin.under_processing');
-                    }else{
-
-                       return trans('admin.new');
-                    }
-
-                })
+            ->addColumn('request_status', function ($process_degrees) {
+                if ($process_degrees->request_status === 'refused') {
+                    return '<td><a class="btn btn-danger text-white">' . trans('admin.refused') . '</a></td>';
+                } elseif ($process_degrees->request_status === 'accept') {
+                    return '<td><a class="btn btn-success text-white">' . trans('admin.accept') . '</a></td>';
+                } else {
+                    return '<select class="form-control" data-id="' .
+                        $process_degrees->id .
+                        '" onchange="updateRequestStatus(this, ' .
+                        $process_degrees->id .
+                        ')">
+                        <option ' .
+                        ($process_degrees->request_status == 'accept' ? 'selected' : '') .
+                        ' value="accept">' .
+                        trans('admin.accept') .
+                        '</option>
+                        <option ' .
+                        ($process_degrees->request_status == 'refused' ? 'selected' : '') .
+                        ' value="refused">' .
+                        trans('admin.refused') .
+                        '</option>
+                        <option ' .
+                        ($process_degrees->request_status == 'under_processing' ? 'selected' : '') .
+                        ' value="under_processing">' .
+                        trans('admin.under_processing') .
+                        '</option>
+                    </select>';
+                }
+            })
 
                 ->addColumn('exam_number', function ($process_degrees) {
 
