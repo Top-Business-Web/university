@@ -230,6 +230,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
     Route::post('importElement', [ElementController::class, 'importElement'])->name('importElement')->middleware('forbidden');
 
     #### process Degrees ####
+    
     Route::resource('process_degrees', ProcessDegreeController::class)->middleware('forbidden');
     Route::get('get_doctor', [ProcessDegreeController::class, 'getDoctor'])->name('getDoctor')->middleware('forbidden');
     Route::post('importProcessDegree', [ProcessDegreeController::class, 'import'])->name('importProcessDegree')->middleware('forbidden');
