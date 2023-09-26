@@ -150,40 +150,39 @@ class SubjectExamController extends Controller
         return Subject::query()
             ->where('department_branch_id', '=', $request->department_branch_id)
             ->pluck('subject_name', 'id');
-
     }
 
 
 
     public function student_exam_print()
     {
-        $subject_exam_students = SubjectExamStudent::query()
-            ->where('period', '=',period()->period)
-            ->where('session', '=','عاديه')
-            ->where('year', '=', period()->year_start)
-            ->where('user_id', '=', Auth::id())
-            ->whereHas('subject_exam', function($query) {
-                $query->orderBy('exam_date');
-            })
-            ->get();
+        $subject_exam_students = SubjectExamStudent::
+        with([
+            'subject_exam' => fn ($query) => $query->orderBy('exam_date','ASC')
+        ])
+        ->where('period', period()->period)
+            ->where('session', 'عاديه')
+            ->where('year', period()->year_start)
+            ->where('user_id', Auth::id())
+            ->get()->sortBy('subject_exam.exam_date');;
+
 
         $array = [];
         $subjects = SubjectExamStudent::query()
-            ->where('period', '=',period()->period)
-            ->where('session', '=','عاديه')
+            ->where('period', '=', period()->period)
+            ->where('session', '=', 'عاديه')
             ->where('year', '=', period()->year_start)
             ->where('user_id', '=', Auth::id())
             ->with(['subject_exam.subject'])
             ->get();
 
-        foreach ($subjects as $subject){
+        foreach ($subjects as $subject) {
 
             $array[] = $subject->subject_exam->subject->id;
         }
 
 
-        return view('admin.subject_exams.print', compact('subject_exam_students','array'));
-
+        return view('admin.subject_exams.print', compact('subject_exam_students', 'array'));
     }
 
 
@@ -192,29 +191,28 @@ class SubjectExamController extends Controller
 
 
         $subject_exam_students = SubjectExamStudent::query()
-            ->where('period', '=',period()->period)
-            ->where('session', '=','استدراكيه')
+            ->where('period', '=', period()->period)
+            ->where('session', '=', 'استدراكيه')
             ->where('year', '=', period()->year_start)
             ->where('user_id', '=', Auth::id())
             ->get();
 
         $array = [];
         $subjects = SubjectExamStudent::query()
-            ->where('period', '=',period()->period)
-            ->where('session', '=','استدراكيه')
+            ->where('period', '=', period()->period)
+            ->where('session', '=', 'استدراكيه')
             ->where('year', '=', period()->year_start)
             ->where('user_id', '=', Auth::id())
             ->with(['subject_exam.subject'])
             ->get();
 
-        foreach ($subjects as $subject){
+        foreach ($subjects as $subject) {
 
             $array[] = $subject->subject_exam->subject->id;
         }
 
-        return view('admin.subject_exams.print_2', compact('subject_exam_students','array'));
-
-    }//end fun
+        return view('admin.subject_exams.print_2', compact('subject_exam_students', 'array'));
+    } //end fun
 
 
 
@@ -224,11 +222,11 @@ class SubjectExamController extends Controller
             ->findOrFail($id);
 
         $period = Period::query()
-            ->where('status','=','start')
+            ->where('status', '=', 'start')
             ->first();
 
         $processDegrees = ProcessDegree::query()
-            ->with(['user','doctor','subject'])
+            ->with(['user', 'doctor', 'subject'])
             ->where('subject_id', $subjectExam->subject_id)
             ->where('year', $period->year_start)
             ->where('period', $period->session)
