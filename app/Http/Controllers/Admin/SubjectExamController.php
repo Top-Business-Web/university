@@ -157,13 +157,14 @@ class SubjectExamController extends Controller
 
     public function student_exam_print()
     {
-
-
         $subject_exam_students = SubjectExamStudent::query()
             ->where('period', '=',period()->period)
             ->where('session', '=','عاديه')
             ->where('year', '=', period()->year_start)
             ->where('user_id', '=', Auth::id())
+            ->whereHas('subject_exam', function($query) {
+                $query->orderBy('exam_date');
+            })
             ->get();
 
         $array = [];
