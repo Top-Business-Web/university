@@ -48,14 +48,15 @@
 
       </div>
 
-        <div class="form-group mb-3">
-            <label class="form-label">{{trans('admin.pull_type')}}</label>
-            <select name="pull_type"  class="form-control select2" data-placeholder="Choose user pull type">
-                <option value="" selected>{{ trans('admin.select') }}</option>
-                <option value="temporary">{{trans('admin.temporary')}}</option>
-                <option value="final">{{trans('admin.final')}}</option>
-            </select>
-        </div>
+      <div class="form-group mb-3">
+        <label class="form-label">{{trans('admin.pull_type')}}</label>
+        <select name="pull_type" id="pull_type" class="form-control select2" data-placeholder="Choose user pull type">
+            <option value="" selected>{{ trans('admin.select') }}</option>
+            <option value="temporary">{{trans('admin.temporary')}}</option>
+            <option value="final">{{trans('admin.final')}}</option>
+        </select>
+    </div>
+    
 
 
         <div class="col-md-12 mb-3">
@@ -63,7 +64,7 @@
             <input type="date" class="form-control" name="pull_date" id="pull_date">
         </div>
 
-        <div class="col-md-12 mb-3">
+        <div class="col-md-12 mb-3" id="pull_return">
             <label for="name_ar" class="form-control-label">{{trans('admin.pull_return')}}</label>
             <input type="date" class="form-control" name="pull_return" id="pull_return">
         </div>
@@ -101,6 +102,17 @@
         }
 
     });
+
+    $(document).ready(function () {
+    $('#pull_type').change(function () {
+        var selectedValue = $(this).val();
+        if (selectedValue === "final") {
+            $('#pull_return').hide();
+        } else {
+            $('#pull_return').show();
+        }
+    });
+});
 </script>
 <script src="{{asset('assets/admin')}}/js/select2.js"></script>
 <script src="{{asset('assets/admin')}}/plugins/select2/select2.full.min.js"></script>

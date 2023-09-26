@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\SubjectExamStudent;
+use App\Models\SubjectUnitDoctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -25,6 +26,15 @@ class SubjectExamStudentController extends Controller {
 
                 ->addColumn('identifier_id', function ($subject_exam_students) {
                     return  $subject_exam_students->user->identifier_id;
+                })
+                ->addColumn('doctor', function ($subject_exam_students) {
+                    $subject_doctor = SubjectUnitDoctor::query()
+                    ->where('period','=',$subject_exam_students->period)
+                    ->where('year', '=', $subject_exam_students->year)
+                    ->where('group_id', '=', $subject_exam_students->subject_exam->group_id)
+                    ->where('subject_id', '=', $subject_exam_students->subject_exam->subject_id)
+                    ->first();
+                    return $subject_doctor->doctor->first_name . " " . $subject_doctor->doctor->last_name;
                 })
                 ->addColumn('exam_code', function ($subject_exam_students) {
                     return  $subject_exam_students->subject_exam->exam_code;
