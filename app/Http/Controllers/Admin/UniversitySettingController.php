@@ -27,6 +27,7 @@ class UniversitySettingController extends Controller
     {
 
         $inputs = $request->all();
+        // dd($inputs);
 
         if ($logo = $request->file('logo')) {
 

@@ -53,28 +53,28 @@
                                             {{ trans('admin.title_ar') }}</label>
                                         <input type="text" class="form-control"
                                                value="{{ $university_settings->getTranslation('title', 'ar')}}"
-                                               name="title_ar">
+                                               name="title[ar]">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="name_ar"
                                                class="form-control-label mt-3">{{ trans('admin.title_en') }}</label>
                                         <input type="text" class="form-control"
                                                value="{{ $university_settings->getTranslation('title','en')}}"
-                                               name="title_en">
+                                               name="title[en]">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="name_ar"
                                                class="form-control-label mt-3">{{ trans('admin.title_fr') }}</label>
                                         <input type="text" class="form-control"
                                                value="{{ $university_settings->getTranslation('title','fr')}}"
-                                               name="title_fr">
+                                               name="title[fr]">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="name_ar"
                                                class="form-control-label mt-3">{{ trans('admin.address_ar') }}</label>
                                         <input type="text" class="form-control"
                                                value="{{ $university_settings->getTranslation('address','ar')}}"
-                                               name="address_ar">
+                                               name="address[ar]">
                                     </div>
                                     <div class="col-md-6">
 
@@ -82,14 +82,14 @@
                                                class="form-control-label mt-3">{{ trans('admin.address_en') }}</label>
                                         <input type="text" class="form-control"
                                                value="{{ $university_settings->getTranslation('address','en')}}"
-                                               name="address_en">
+                                               name="address[en]">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="name_ar"
                                                class="form-control-label mt-3">{{ trans('admin.address_fr')  }}</label>
                                         <input type="text" class="form-control"
                                                value="{{ $university_settings->getTranslation('address','fr')}}"
-                                               name="address_fr">
+                                               name="address[fr]">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -173,22 +173,22 @@
                                     <div class="col-md-12">
                                         <label for="name_ar" class="form-control-label">{{ trans('admin.description') }}
                                             {{ trans('admin.arabic') }}</label>
-                                        <textarea type="text" rows="5" class="form-control editor"
-                                                  name="description_ar"
+                                        <textarea rows="5" class="form-control editor"
+                                                  name="description[ar]"
                                                   required>{{ $university_settings->getTranslation('description','ar')}}</textarea>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="name_ar" class="form-control-label">{{ trans('admin.description') }}
                                             {{ trans('admin.english') }}</label>
-                                        <textarea type="text" rows="5" class="form-control editor"
-                                                  name="description_en"
+                                        <textarea rows="5" class="form-control editor"
+                                                  name="description[en]"
                                                   required>{{ $university_settings->getTranslation('description','en')}}</textarea>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="name_ar" class="form-control-label">{{ trans('admin.description') }}
                                             {{ trans('admin.france') }}</label>
-                                        <textarea type="text" rows="5" class="form-control editor"
-                                                  name="description_fr"
+                                        <textarea rows="5" class="form-control editor"
+                                                  name="description[fr]"
                                                   required>{{ $university_settings->getTranslation('description','fr')}}</textarea>
                                     </div>
                                 </div>
