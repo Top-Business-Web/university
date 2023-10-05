@@ -42,11 +42,13 @@ class SubjectDoctorController extends Controller
                 ->addColumn('department_id', function ($subject_unit_doctors) {
                     return  $subject_unit_doctors->subject->department->department_name ;
                 })
+                ->addColumn('group_id', function ($subject_unit_doctors) {
+                    return  $subject_unit_doctors->group->group_name;
+                })
 
 
                 ->addColumn('department_branch_id', function ($subject_unit_doctors) {
                     return  $subject_unit_doctors->subject->department_branch->branch_name ;
-
                 })
 
                 ->escapeColumns([])
