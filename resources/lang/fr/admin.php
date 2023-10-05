@@ -23,6 +23,7 @@ return [
     "address_ar" => "Adresse du collège en arabe",
     "address_en" => "Adresse du collège en anglais",
     "address_fr" => "Adresse de la faculté en français",
+    "number_of_exam" => "Nombre d'examen",
 
 
     "status" => "Statut",

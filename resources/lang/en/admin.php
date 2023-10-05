@@ -17,6 +17,7 @@ return [
     "name" => "Name",
     "value" => "Value",
     "title" => "title",
+    "number_of_exam" => "Number of exam",
 
     "title_ar" => "The name of the college in Arabic",
     "title_en" => "Name of the College in English",

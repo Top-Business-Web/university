@@ -64,4 +64,22 @@
 
 <script>
     $('.dropify').dropify()
+
+    $.ajax({
+    type: "POST",
+    url: "{{ route('store-process-exam') }}", // Replace with your actual route
+    data: formData, // Your form data
+    processData: false,
+    contentType: false,
+    success: function (data) {
+        if (data.status === 200) {
+            // Reload the page on success
+            location.reload();
+        }
+    },
+    error: function (xhr, status, error) {
+        console.error(xhr.responseText);
+    }
+});
+
 </script>

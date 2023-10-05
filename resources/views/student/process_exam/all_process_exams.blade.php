@@ -11,7 +11,8 @@
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
-                @if($deadline >  0)
+                @if($processExamCount >  0)
+                    @else
                     <div class="card-header">
                         <h3 class="card-title"></h3>
                         <div class="">

@@ -49,15 +49,13 @@ class SubjectExamStudentResultController extends Controller
                  })
 
                 ->addColumn('doctor', function ($subject_exam_student_results) {
-
-
                     $doctor =  @SubjectUnitDoctor::query()
                         ->where('subject_id','=',$subject_exam_student_results->subject_id)
                         ->where('year','=',period()->year_start)
                         ->first()
                         ->doctor;
 
-                    return @$doctor->first_name . " " . @$doctor->last_name;
+                    return 'hello';
 
                 })
                 ->addColumn('add_request', function ($subject_exam_student_results) {
@@ -149,8 +147,6 @@ class SubjectExamStudentResultController extends Controller
                 })
 
                 ->addColumn('doctor', function ($subject_exam_student_results) {
-
-
                     $doctor =  @SubjectUnitDoctor::query()
                         ->where('subject_id','=',$subject_exam_student_results->subject_id)
                         ->where('year','=',period()->year_start)
