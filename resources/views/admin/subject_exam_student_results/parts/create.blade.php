@@ -4,6 +4,16 @@
         @csrf
         <div class="form-group">
             <div class="row">
+                <div class="col-md-6 mt-3">
+                    <select name="user_id" class="form-control">
+                        <option value="" selected disabled>@lang('admin.select')</option>
+                        @foreach ($users as $user)
+                        <option value="{{ $user->id }}" style="text-align: center">
+                            {{ $user->identifier_id }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="col-md-12 mt-3">
                     <label for="subject_id" class="form-control-label">{{ trans('subject_exam_student_result.subject')
                         }}</label>
@@ -17,17 +27,6 @@
                     </select>
                     <label for="user_id" class="form-control-label">{{
                         trans('subject_exam_student_result.identifier_id') }}</label>
-                </div>
-
-                <div class="col-md-6 mt-3">
-                    <select name="user_id" class="form-control">
-                        <option value="" selected disabled>@lang('admin.select')</option>
-                        @foreach ($users as $user)
-                        <option value="{{ $user->id }}" style="text-align: center">
-                            {{ $user->identifier_id }}
-                        </option>
-                        @endforeach
-                    </select>
                 </div>
                 <div class="col-md-6 mt-3">
                     <label for="subject_id" class="form-control-label">{{ trans('subject_exam_student_result.group')

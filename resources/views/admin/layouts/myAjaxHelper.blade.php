@@ -155,6 +155,8 @@
                         toastr.error(data.mymessage);
                     } else if(data.status == 411){
                         toastr.error(data.mymessage);
+                    }else if(data.status == 412){
+                        toastr.error('لا يصلح تسجيل هذا الطالب في فوج ثاني');
                     }else if(data.status == 413){
                         toastr.error(data.mymessage);
                     }else
