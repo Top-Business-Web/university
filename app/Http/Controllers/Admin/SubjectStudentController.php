@@ -48,7 +48,7 @@ class SubjectStudentController extends Controller
                     return $subject_exam_students->subject->unit->unit_name;
                 })
                 ->addColumn('identifier_id', function ($subject_exam_students) {
-                        return $subject_exam_students->user->identifier_id;
+                    return $subject_exam_students->user->identifier_id;
                 })
                 ->editColumn('subject_id', function ($subject_students) {
                     return $subject_students->subject->subject_name;
@@ -57,10 +57,10 @@ class SubjectStudentController extends Controller
                     return $subject_students->group->group_name;
                 })
                 ->addColumn('department', function ($subject_students) {
-                    return $subject_students->subject->department->getTranslation('department_name',app()->getLocale());
+                    return $subject_students->subject->department->getTranslation('department_name', app()->getLocale());
                 })
                 ->addColumn('department_branch', function ($subject_students) {
-                    return $subject_students->subject->department_branch->getTranslation('branch_name',app()->getLocale());
+                    return $subject_students->subject->department_branch->getTranslation('branch_name', app()->getLocale());
                 })
                 ->toJson();
         } else {
@@ -90,16 +90,27 @@ class SubjectStudentController extends Controller
             ->where('id', '=', $request->user_id)
             ->first();
 
-        if ($user->subjects()->syncWithPivotValues($request->subject_id,
-            [
-                'group_id' => $request->group_id,
-                'year' => $request->year,
-                'period' => $request->period
-            ]
-        )) {
-            return response()->json(['status' => 200]);
+        $subject_student = SubjectStudent::query()
+            ->where('period', '=', $request->period)
+            ->where('user_id', '=', $request->user_id)
+            ->where('year', '=', $request->year)
+            ->first();
+
+        if ($request->group_id != $subject_student->group_id) {
+            return response()->json(['status' => 412]);
         } else {
-            return response()->json(['status' => 405]);
+            if ($user->subjects()->syncWithPivotValues(
+                $request->subject_id,
+                [
+                    'group_id' => $request->group_id,
+                    'year' => $request->year,
+                    'period' => $request->period
+                ]
+            )) {
+                return response()->json(['status' => 200]);
+            } else {
+                return response()->json(['status' => 412]);
+            }
         }
     }
 
@@ -140,7 +151,7 @@ class SubjectStudentController extends Controller
                 ->first();
             $subject_students = SubjectStudent::query()
                 ->where('period', '=', $periods->period)
-                ->where('user_id',Auth::user()->id)
+                ->where('user_id', Auth::user()->id)
                 ->where('year', '>=', $periods->year_start)
                 ->where('year', '<=', $periods->year_end)
                 ->get();
@@ -171,13 +182,11 @@ class SubjectStudentController extends Controller
 
     public function importSubjectStudent(Request $request): \Illuminate\Http\JsonResponse
     {
-        $import = Excel::import(new SubjectStudentImport(),$request->exelFile);
+        $import = Excel::import(new SubjectStudentImport(), $request->exelFile);
         if ($import) {
             return response()->json(['status' => 200]);
         } else {
             return response()->json(['status' => 500]);
         }
     }
-
-
 }

@@ -16,7 +16,7 @@ class SubjectStudentController extends Controller{
 
     public function index(Request $request){
         if ($request->ajax()) {
-
+        
             $subject_students = SubjectStudent::query()
                 ->where('period', '=', period()->period)
                 ->where('user_id','=',Auth::id())
