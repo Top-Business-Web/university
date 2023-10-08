@@ -173,10 +173,8 @@
 
                                 @php
                             $doctor = App\Models\SubjectUnitDoctor::query()
-                            ->with(['doctor'])
                             ->whereHas('doctor', function ($q) use($subject_exam_student){
-                                $q->where('subject_id','=',$subject_exam_student->subject_exam->subject->id);
-
+                                $q->where('subject_id',$subject_exam_student->subject_exam->subject->id);
                             })
                             ->whereIn('subject_id',$array)
                             ->where('period', '=',period()->period)
