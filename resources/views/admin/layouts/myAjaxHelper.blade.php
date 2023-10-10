@@ -64,11 +64,6 @@
                     text: '@lang('admin.Excel')',
                     className: 'btn-primary'
                 },
-                // {
-                //     extend: 'pdf',
-                //     text: 'PDF',
-                //     className: 'btn-primary'
-                // },
                 {
                     extend: 'colvis',
                     text: '@lang('admin.show')',

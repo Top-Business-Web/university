@@ -33,6 +33,7 @@
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">{{trans('subject_student_data.identifier_id')}}</th>
                                 <th class="min-w-25px">{{trans('subject_student_data.subject_code')}}</th>
+                                <th class="min-w-25px">{{trans('admin.doctor')}}</th>
                                 <th class="min-w-25px">{{trans('admin.session')}}</th>
                                 <th class="min-w-25px">{{trans('subject_student_data.group_id')}}</th>
                                 <th class="min-w-25px">{{trans('subject_student_data.exam_day')}}</th>
@@ -62,6 +63,7 @@
                 var columns = [
                     {data: 'identifier_id', name: 'identifier_id'},
                     {data: 'code', name: 'code'},
+                    {data: 'doctor', name: 'doctor'},
                     {data: 'session', name: 'session'},
                     {data: 'group_id', name: 'group_id'},
                     {data: 'exam_day', name: 'exam_day'},

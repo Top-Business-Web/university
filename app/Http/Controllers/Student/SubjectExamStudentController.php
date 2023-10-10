@@ -115,6 +115,16 @@ class SubjectExamStudentController extends Controller
                     return $subject_exam_students->subject_exam->exam_day;
                 })
 
+                ->addColumn('doctor', function ($subject_exam_students) {
+                    $subject_doctor = SubjectUnitDoctor::query()
+                        ->where('period', '=', $subject_exam_students->period)
+                        ->where('year', '=', $subject_exam_students->year)
+                        ->where('group_id', '=', $subject_exam_students->subject_exam->group_id)
+                        ->where('subject_id', '=', $subject_exam_students->subject_exam->subject_id)
+                        ->first();
+                    return $subject_doctor->doctor->first_name . " " . $subject_doctor->doctor->last_name;
+                })
+
 
                 ->addColumn('time_start', function ($subject_exam_students) {
 
