@@ -62,30 +62,52 @@
             padding: 0.2rem !important;
         }
         @media print {
-            body{
-                font-size: 7px;
+            body {
+                font-size: 10px;
             }
+
+            .divPrint{
+                width: 100px !important;
+                bottom: 14px;
+                position: relative;
+            }
+
             .table td {
                 padding: 0.2rem !important;
             }
-            .p-5{
+
+            .p-5 {
                 padding: 10px !important;
             }
-            .print{
-                font-size: 10px;
+
+            /*.print {*/
+            /*    font-size: 10px;*/
+            /*}*/
+
+            /*.img-print {*/
+            /*    width: 50px !important;*/
+            /*}*/
+
+            /*.mb-4 {*/
+            /*    margin-bottom: 0px;*/
+            /*}*/
+
+            /*.mt-4 {*/
+            /*    margin-top: 0px !important;*/
+            /*}*/
+
+            /*.image-logo1 {*/
+            /*    margin-bottom: 0px;*/
+            /*}*/
+        }
+        @media print {
+            @page {
+                size: A4 landscape;
             }
-            .img-print{
-                width: 50px !important;
-            }
-            .mb-4{
-                margin-bottom: 0px;
-            }
-            .mt-4{
-                margin-top: 0px !important;
-            }
-            .image-logo1 {
-                margin-bottom: 0px;
-            }
+            /*body {*/
+            /*    transform: scale(1); !* Adjust the scale factor as needed *!*/
+            /*    transform-origin: 0 0;*/
+            /*}*/
         }
     </style>
 </head>
@@ -144,8 +166,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class=" col-2 d-flex justify-content-center">
-                                {{ QrCode::size(120)->generate(route('subject_exams.print')) }}
+                            <div class=" col-2 d-flex justify-content-center divPrint">
+                                {!!  QrCode::size(120)->generate(route('subject_exams.print'))  !!}
                             </div>
                         </div>
                         <!--End Row -->
@@ -154,6 +176,7 @@
                             <thead>
                             <tr>
                                 <th class="min-w-50px">{{ trans('admin.unit_name') }}</th>
+                                <th class="min-w-50px">{{ trans('admin.session') }}</th>
                                 <th class="min-w-25px">{{ trans('admin.subject_name_') }}</th>
                                 <th class="min-w-25px">{{ trans('admin.group_name_') }}</th>
                                 <th class="min-w-25px">{{ trans('admin.day_name_') }}</th>
@@ -162,8 +185,6 @@
                                 <th class="min-w-50px">{{ trans('admin.section_') }}</th>
                                 <th class="min-w-25px">{{trans('subject_student_data.exam_number_name')}}</th>
                                 <th class="min-w-25px">{{ trans('admin.doctor') }}</th>
-
-
                             </tr>
                             </thead>
                             <tbody>
@@ -174,7 +195,8 @@
                                     $doctor = App\Models\SubjectUnitDoctor::query()
                                     ->with(['doctor'])
                                     ->whereHas('doctor', function ($q) use($subject_exam_student){
-                                        $q->where('subject_id','=',$subject_exam_student->subject_exam->subject->id);
+                                        $q->where('subject_id','=',$subject_exam_student->subject_exam->subject->id)
+                                         ->where('group_id',$subject_exam_student->subject_exam->group->id);
 
                                     })
                                     ->whereIn('subject_id',$array)
@@ -184,6 +206,7 @@
 
                                 <tr>
                                     <td>{{ $subject_exam_student->subject_exam->subject->unit->unit_name }}</td>
+                                    <td>استدراكية</td>
                                     <td>{{ $subject_exam_student->subject_exam->subject->subject_name }}</td>
                                     <td>{{ $subject_exam_student->subject_exam->group->group_name }}</td>
                                     <td>{{ $subject_exam_student->subject_exam->exam_day }}</td>

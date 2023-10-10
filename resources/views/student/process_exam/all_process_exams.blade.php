@@ -31,7 +31,6 @@
                         <!--begin::Table-->
                         <table class="table table-striped table-bordered text-nowrap w-100" id="dataTable">
                             <thead>
-
                             <tr class="fw-bolder text-muted bg-light">
                                 {{-- <th class="min-w-25px">{{trans('process_exam.id')}}</th> --}}
                                 <th class="min-w-25px">{{trans('process_exam.identifier_id')}}</th>
@@ -43,8 +42,6 @@
                                 <th class="min-w-25px">{{trans('process_exam.attachment_file')}}</th>
                                 <th class="min-w-25px">{{trans('process_exam.request_status')}}</th>
                                 <th class="min-w-25px">{{trans('process_exam.delete_request')}}</th>
-
-
                             </tr>
                             </thead>
                         </table>
@@ -105,7 +102,6 @@
 
 
                 var columns = [
-                    // {data: 'id', name: 'id'},
                     {data: 'identifier_id', name: 'identifier_id'},
                     {data: 'user_id', name: 'user_id'},
                     {data: 'year', name: 'year'},
@@ -119,7 +115,65 @@
                 showData('{{route('get-all-process-exams')}}', columns);
                 deleteScript('{{route('delete-process-exam')}}');
                 showAddModal('{{route('create-process-exam')}}');
-                addScript();
+
+
+
+                function addScriptProcss() {
+                    $(document).on('submit', 'Form#addForm', function(e) {
+                        e.preventDefault();
+                        var formData = new FormData(this);
+                        var url = $('#addForm').attr('action');
+                        $.ajax({
+                            url: url,
+                            type: 'POST',
+                            data: formData,
+                            beforeSend: function() {
+                                $('#addButton').html('<span class="spinner-border spinner-border-sm mr-2" ' +
+                                    ' ></span> <span style="margin-left: 4px;">{{ trans('admin.wait') }} ..</span>').attr(
+                                    'disabled', true);
+                            },
+                            success: function(data) {
+                                if (data.status == 200) {
+                                    window.location.reload();
+                                    toastr.success(' {{ trans('admin.added_successfully') }} ');
+                                } else if (data.status == 405) {
+                                    toastr.error(data.mymessage);
+                                } else if(data.status == 411){
+                                    toastr.error(data.mymessage);
+                                }else if(data.status == 412){
+                                    toastr.error('لا يصلح تسجيل هذا الطالب في فوج ثاني');
+                                }else if(data.status == 413){
+                                    toastr.error(data.mymessage);
+                                }else
+                                    toastr.error(' {{ trans('admin.something_went_wrong') }} ..');
+                                $('#addButton').html(`{{ trans('admin.add') }}`).attr('disabled', false);
+                                $('#editOrCreate').modal('hide')
+                            },
+                            error: function(data) {
+                                if (data.status === 500) {
+                                    toastr.error(' {{ trans('admin.something_went_wrong') }} ..');
+                                } else if (data.status === 422) {
+                                    var errors = $.parseJSON(data.responseText);
+                                    $.each(errors, function(key, value) {
+                                        if ($.isPlainObject(value)) {
+                                            $.each(value, function(key, value) {
+                                                toastr.error(value, '{{ trans('admin.wrong') }}');
+                                            });
+                                        }
+                                    });
+                                } else
+                                    toastr.error('{{ trans('admin.something_went_wrong') }} ..');
+                                $('#addButton').html(`{{ trans('admin.add') }}`).attr('disabled', false);
+                            }, //end error method
+
+                            cache: false,
+                            contentType: false,
+                            processData: false
+                        });
+                    });
+                }
+
+                addScriptProcss();
 
 
 
