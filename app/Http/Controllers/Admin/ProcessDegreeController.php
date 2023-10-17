@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\ProcessDegreeExport;
 use App\Imports\ProcessDegreeImport;
+use App\Models\SubjectExam;
+use App\Models\SubjectExamStudent;
 use App\Models\User;
 use App\Models\Period;
 use App\Models\Subject;
@@ -55,10 +57,7 @@ class ProcessDegreeController extends Controller
                         return '<td><a class="btn btn-success text-white">' . trans('admin.accept') . '</a></td>';
                     } else {
                         return '<select class="form-control" data-id="' .
-                            $process_degrees->id .
-                            '" onchange="updateRequestStatus(this, ' .
-                            $process_degrees->id .
-                            ')">
+                            $process_degrees->id . '" onchange="updateRequestStatus(this, ' . $process_degrees->id . ')">
                          <option selected disabled   value="">' .
                             trans('admin.select') .
                             '</option>
@@ -97,6 +96,13 @@ class ProcessDegreeController extends Controller
                 })
                 ->addColumn('subject_id', function ($process_degrees) {
                     return $process_degrees->subject->subject_name;
+                })
+                ->editColumn('exam_code',function ($process_degrees){
+                    $id = SubjectExam::where('exam_code',$process_degrees->exam_code)
+                        ->first('id')->id;
+
+                    return SubjectExamStudent::where('subject_exam_id',$id)
+                    ->first('exam_number')->exam_number;
                 })
                 ->escapeColumns([])
                 ->make(true);

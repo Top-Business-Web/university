@@ -157,7 +157,7 @@
                                     <span class="fw-bold">{{ @$user->user_department->department->department_name }}</span>
                                 </div>
                                 <div>
-                                    <span class="fw-bold">{{@$user->user_department->department->department_name }}</span>
+                                    <span class="fw-bold">{{@$user->user_department->department->getTranslation('department_name', 'en') }}</span>
                                     <span class="fs-5 header1"> Filiere</span>
                                 </div>
                             </div>

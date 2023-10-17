@@ -5,6 +5,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6 mt-3">
+                    <label for="user_id" class="form-control-label">{{trans('subject_exam_student_result.identifier_id') }}</label>
                     <select name="user_id" class="form-control">
                         <option value="" selected disabled>@lang('admin.select')</option>
                         @foreach ($users as $user)
@@ -15,8 +16,7 @@
                     </select>
                 </div>
                 <div class="col-md-12 mt-3">
-                    <label for="subject_id" class="form-control-label">{{ trans('subject_exam_student_result.subject')
-                        }}</label>
+                    <label for="subject_id" class="form-control-label">{{ trans('subject_exam_student_result.subject') }}</label>
                     <select name="subject_id" class="form-control" id="subject">
                         <option value="" selected disabled>@lang('admin.select')</option>
                         @foreach ($subjects as $subject)
@@ -25,8 +25,6 @@
                         </option>
                         @endforeach
                     </select>
-                    <label for="user_id" class="form-control-label">{{
-                        trans('subject_exam_student_result.identifier_id') }}</label>
                 </div>
                 <div class="col-md-6 mt-3">
                     <label for="subject_id" class="form-control-label">{{ trans('subject_exam_student_result.group')
