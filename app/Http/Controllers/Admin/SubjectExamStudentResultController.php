@@ -125,9 +125,6 @@ class SubjectExamStudentResultController extends Controller
     {
         $subjects = Subject::query()
             ->select('id', 'subject_name')
-            ->whereHas('doctor', function ($query) {
-                $query->where('user_id', auth()->user()->id);
-            })
             ->get();
 
         $users = User::query()

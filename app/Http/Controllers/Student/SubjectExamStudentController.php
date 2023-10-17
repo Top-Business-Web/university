@@ -15,14 +15,20 @@ class SubjectExamStudentController extends Controller
 
     public function normal(Request $request)
     {
+        $subject_exam_students = SubjectExamStudent::query()
+            ->where('session', '=', 'عاديه')
+            ->where('year', '=', period()->year_start)
+            ->where('user_id', '=', Auth::id())
+            ->whereHas('subject_exam', function ($query) {
+                $query->orderBy('exam_date', 'asc')->orderBy('time_start', 'asc');
+            })
+            ->with(['subject_exam' => function ($query) {
+                $query->orderBy('exam_date', 'asc')->orderBy('time_start', 'asc');
+            }])
+            ->get();
+
 
         if ($request->ajax()) {
-
-            $subject_exam_students = SubjectExamStudent::query()
-                ->where('session', '=', 'عاديه')
-                ->where('year', '=', period()->year_start)
-                ->where('user_id', '=', Auth::id())
-                ->get();
 
             return Datatables::of($subject_exam_students)
 
