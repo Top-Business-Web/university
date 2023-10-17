@@ -61,5 +61,40 @@
                 ]
                 showData('{{ route('doctor_process_degrees_remedial') }}', columns);
 
+
+                function updateRequestStatus(selectElement, id) {
+                    var selectedValue = $(selectElement).val();
+
+                    // Make an Ajax request to update the status
+                    $.ajax({
+                        url: '{{ route('RequestStatusDegree') }}',
+                        type: 'post',
+                        data: {
+                            id: id,
+                            status: selectedValue,
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        success: function(data) {
+                            if (data.code == 200) {
+                                if (data.status == 'new') {
+                                    toastr.success('{{ trans('admin.request_status_is_new') }}');
+                                } else if (data.status == 'accept') {
+                                    var url = "{{ route('editUpdateDegree',[':id']) }}".replace(':id', id)
+                                    location.href = url;
+                                    toastr.success('{{ trans('admin.request_status_is_accepted') }}');
+                                } else if (data.status == 'refused') {
+                                    toastr.success('{{ trans('admin.request_status_is_refused') }}');
+                                } else if (data.status == 'under_processing') {
+                                    toastr.success('{{ trans('admin.request_status_is_under_processing') }}');
+                                }
+                            }
+                        },
+
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Handle the error
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+                }
             </script>
 @endsection

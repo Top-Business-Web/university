@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    {{ trans('subject_exam_student_result.normal') }}
+    {{ trans('admin.result') }}
 @endsection
 @section('page_name')
-    {{ trans('subject_exam_student_result.normal') }}
+    {{ trans('admin.result') }}
 @endsection
 @section('content')
 
