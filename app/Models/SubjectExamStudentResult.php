@@ -41,4 +41,9 @@ class SubjectExamStudentResult extends Model
         return $this->belongsTo(User::class, 'user_id', 'id')->where('user_type', 'student');
     }
 
+    public function doctor(): BelongsTo
+    {
+        return $this->belongsTo(SubjectUnitDoctor::class, 'group_id', 'group_id');
+    }
+
 }

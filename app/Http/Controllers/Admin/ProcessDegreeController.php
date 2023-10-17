@@ -295,8 +295,9 @@ class ProcessDegreeController extends Controller
             ->toArray();
 
         $history = ProcessDegree::query()
-            ->whereIn('subject_id', $doctorSubjects)
+            ->where('doctor_id',auth()->user()->id)
             ->get(['id', 'user_id', 'created_at', 'period']);
+
         return view('admin.process_degrees.history', compact('history'));
     } // end process degree history
 

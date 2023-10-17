@@ -57,7 +57,7 @@ class ProcessDegreeController extends Controller
                 })
                 ->addColumn('exam_number', function ($process_degrees) {
 
-                   return SubjectExamStudent::query()
+                   return @SubjectExamStudent::query()
                        ->where('year','=',period()->year_start)
                        ->where('period','=',period()->period)
                            ->where('user_id', '=', Auth::id())

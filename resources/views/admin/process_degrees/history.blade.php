@@ -15,7 +15,8 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ trans('admin.all_requests') }}</h3>
+                    <h3 class="card-title">{{ trans('admin.all_requests') }} ( {{ $history->count() }} ) </h3>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -24,7 +25,7 @@
                             <thead>
                             <tr class="fw-bolder text-muted bg-light">
                                 <th class="min-w-25px">#</th>
-                                <th class="min-w-25px">{{ trans('admin.identifier_id') }}</th>
+                                <th class="min-w-25px">{{ trans('subject_exam.identifier_id_student') }}</th>
                                 <th class="min-w-25px">{{ trans('admin.student') }}</th>
                                 <th class="min-w-25px">{{ trans('admin.session') }}</th>
                                 <th class="min-w-25px">{{ trans('admin.date') }}</th>

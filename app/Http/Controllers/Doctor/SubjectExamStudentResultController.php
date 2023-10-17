@@ -9,9 +9,11 @@ use App\Models\SubjectExamStudentResult;
 use App\Models\SubjectUnitDoctor;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Collection;
 use Yajra\DataTables\DataTables;
 
-class SubjectExamStudentResultController extends Controller{
+class SubjectExamStudentResultController extends Controller
+{
 
     public function __construct()
     {
@@ -21,28 +23,31 @@ class SubjectExamStudentResultController extends Controller{
 
     public function index(request $request)
     {
-        if ($request->ajax()) {
-
-            $subject_ids = SubjectUnitDoctor::query()
-                ->where('period', '=', period()->period)
-                ->where('year', '=', period()->year_start)
-                ->where('user_id','=',auth()->id())
-                ->pluck('subject_id')
-                ->toArray();
 
 
-            $subject_exam_student_results = SubjectExamStudentResult::query()
-                ->whereIn('subject_id',$subject_ids)
+        $ids = SubjectUnitDoctor::query()
+            ->where('period', '=', period()->period)
+            ->where('year', '=', period()->year_start)
+            ->where('user_id', '=', auth()->id())
+            ->get();
+
+        $subject_exam_student_results = collect(); // Initialize an empty collection
+
+        for ($i = 0; $i < count($ids); $i++) {
+            $data = SubjectExamStudentResult::query()
+                ->where('subject_id', $ids[$i]->subject_id)
+                ->where('group_id', $ids[$i]->group_id)
                 ->where('year', '=', period()->year_start)
                 ->get();
+            $subject_exam_student_results = $subject_exam_student_results->concat($data);
+        }
+
+        if ($request->ajax()) {
 
             return Datatables::of($subject_exam_student_results)
-
                 ->editColumn('user_id', function ($subject_exam_student_results) {
                     return $subject_exam_student_results->user->first_name . ' ' . $subject_exam_student_results->user->last_name;
                 })
-
-
                 ->addColumn('group_id', function ($subject_exam_student_results) {
                     return $subject_exam_student_results->group->group_name;
                 })
@@ -52,16 +57,17 @@ class SubjectExamStudentResultController extends Controller{
                 ->addColumn('identifier_id', function ($subject_exam_student_results) {
                     return $subject_exam_student_results->user->identifier_id;
                 })
-
                 ->addColumn('exam_number', function ($subject_exam_student_results) {
 
                     return @SubjectExamStudent::query()
-                        ->where('year','=',period()->year_start)
-                        ->where('period','=',period()->period)
+                        ->where('year', '=', period()->year_start)
+                        ->where('period', '=', period()->period)
+                        ->where('user_id',$subject_exam_student_results->user_id)
                         ->with('subject_exam')
-                        ->whereHas('subject_exam', fn(Builder $builder) =>
-
-                        $builder->where('subject_id', '=', $subject_exam_student_results->subject_id))
+                        ->whereHas('subject_exam', function ($query) use ($subject_exam_student_results) {
+                            $query->where('subject_id', '=', $subject_exam_student_results->subject_id)
+                                ->where('group_id', '=', $subject_exam_student_results->group_id);
+                        })
                         ->first()->exam_number;
                 })
                 ->escapeColumns([])
