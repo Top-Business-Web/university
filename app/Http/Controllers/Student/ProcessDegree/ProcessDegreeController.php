@@ -57,15 +57,16 @@ class ProcessDegreeController extends Controller
                 })
                 ->addColumn('exam_number', function ($process_degrees) {
 
-                   return @SubjectExamStudent::query()
+                   return SubjectExamStudent::query()
                        ->where('year','=',period()->year_start)
                        ->where('period','=',period()->period)
                            ->where('user_id', '=', Auth::id())
                         ->with('subject_exam')
                         ->whereHas('subject_exam', fn(Builder $builder) =>
-
                         $builder->where('subject_id', '=', $process_degrees->subject_id))
-                       ->first()->exam_number;
+                       ->where('session','=','استدراكيه')
+                       ->first()
+                       ->exam_number;
                 })
 
                 ->addColumn('identifier_id', function ($process_degrees) {
@@ -189,6 +190,7 @@ class ProcessDegreeController extends Controller
         $subjectExamStudent = SubjectExamStudent::query()
             ->whereHas('subject_exam', fn(Builder $builder)=>
             $builder->where('subject_id','=',$id)
+                ->where('session','=','استدراكيه')
             )
             ->where('year','=',period()->year_start)
             ->where('user_id','=',Auth::id())
