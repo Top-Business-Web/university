@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\SubjectExamStudent;
 use App\Models\SubjectUnitDoctor;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -19,14 +20,8 @@ class SubjectExamStudentController extends Controller
             ->where('session', '=', 'عاديه')
             ->where('year', '=', period()->year_start)
             ->where('user_id', '=', Auth::id())
-            ->whereHas('subject_exam', function ($query) {
-                $query->orderBy('exam_date', 'asc')->orderBy('time_start', 'asc');
-            })
-            ->with(['subject_exam' => function ($query) {
-                $query->orderBy('exam_date', 'asc')->orderBy('time_start', 'asc');
-            }])
+            ->with('subject_exam')
             ->get();
-
 
         if ($request->ajax()) {
 
@@ -44,6 +39,7 @@ class SubjectExamStudentController extends Controller
                         ->first();
                     return $subject_doctor->doctor->first_name . " " . $subject_doctor->doctor->last_name;
                 })
+
                 ->addColumn('exam_code', function ($subject_exam_students) {
                     return  $subject_exam_students->subject_exam->exam_code;
                 })
@@ -63,6 +59,7 @@ class SubjectExamStudentController extends Controller
                 ->addColumn('exam_date', function ($subject_exam_students) {
                     return $subject_exam_students->subject_exam->exam_date;
                 })
+
 
                 ->addColumn('time_start', function ($subject_exam_students) {
 

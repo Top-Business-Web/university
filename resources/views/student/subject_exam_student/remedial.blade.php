@@ -75,7 +75,72 @@
                     {data: 'exam_number', name: 'exam_number'},
                     {data: 'section', name: 'section'},
                 ]
-                showData('{{route('subject-exam-student-remedial')}}', columns);
+
+                async function showDataCustom(routeOfShow, columns) {
+                    /**
+                     *
+                     * @type {*|jQuery}
+                     */
+                    var table = $('#dataTable').DataTable({
+                        processing: true,
+                        serverSide: false,
+                        ajax: routeOfShow,
+                        columns: columns,
+                        order: [
+                            [ 6, 'asc' ],[ 7,'asc'],
+                        ],
+                        "language": {
+                            "sProcessing": "@lang('admin.Loading') ..",
+                            "sLengthMenu": "اظهار _MENU_ سجل",
+                            "sZeroRecords": "@lang('admin.No results')",
+                            "sInfo": "@lang('admin.register') _START_ @lang('admin.from')  _END_ @lang('admin.to') _TOTAL_ @lang('admin.show')",
+                            "sInfoEmpty": "@lang('admin.No results')",
+                            "sInfoFiltered": "@lang('admin.Search')",
+                            "sSearch": "@lang('admin.research') :    ",
+                            "oPaginate": {
+                                "sPrevious": "<",
+                                "sNext": ">",
+                            },
+                            buttons: {
+                                copyTitle: 'تم النسخ للحافظة <i class="fa fa-check-circle text-success"></i>',
+                                copySuccess: {
+                                    1: "تم نسخ صف واحد",
+                                    _: "تم نسخ %d صفوف بنجاح"
+                                },
+                            }
+                        },
+
+                        dom: 'Bfrtip',
+                        buttons: [{
+                            extend: 'copy',
+                            text: '@lang('admin.copy')',
+                            className: 'btn-primary'
+                        },
+                            {
+                                extend: 'print',
+                                text: '@lang('admin.Print')',
+                                className: 'btn-primary'
+                            },
+                            {
+                                extend: 'excel',
+                                text: '@lang('admin.Excel')',
+                                className: 'btn-primary'
+                            },
+                            {
+                                extend: 'colvis',
+                                text: '@lang('admin.show')',
+                                className: 'btn-primary'
+                            },
+                        ]
+                    });
+
+                    $('#type').on('keyup',function(){
+                        table.draw();
+                    });
+                }
+
+
+                showDataCustom('{{route('subject-exam-student-remedial')}}', columns);
 
                 $(document).on('click', '#printBtn',function(){
                     window.location.href='{{ route('subject_exams.printRemedial') }}';
