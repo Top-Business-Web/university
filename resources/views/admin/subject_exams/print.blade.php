@@ -202,7 +202,7 @@
                                 </table>
                             </div>
                             <div class=" col-2 d-flex justify-content-center divPrint">
-                                {!!  QrCode::size(120)->generate(route('subject_exams.print')) !!}
+                                {!!  QrCode::size(120)->generate(route('/')) !!}
                             </div>
                         </div>
                         <!--End Row -->

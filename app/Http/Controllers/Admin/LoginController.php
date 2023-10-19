@@ -78,7 +78,7 @@ class LoginController extends Controller
 
     public function activeStudents(Request $request): JsonResponse
     {
-//        dd($request->all());
+        $setting = UniversitySetting::first();
         $user = User::query()
             ->where('email', '=', $request->email)
             ->where('user_type', '=', 'student')
@@ -99,10 +99,10 @@ class LoginController extends Controller
                     'created_at' => Carbon::now()
                 ]);
                 $data = array('name' => $user->first_name . ' ' . $user->last_name, 'email' => $user->email, 'token' => $token);
-                Mail::send('admin.mail.mail', $data, function ($message) use ($user) {
+                Mail::send('admin.mail.mail', $data, function ($message) use ($user,$setting) {
                     $message->to($user->email, $user->first_name)->subject
                     ('Activation Email');
-                    $message->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'));
+                    $message->from(env('MAIL_FROM_ADDRESS'), $setting->getTranslation('title','en'));
                 });
                 $user->password = Hash::make($request->password);
                 $user->save();
@@ -133,6 +133,7 @@ class LoginController extends Controller
 
     public function resetPass(Request $request)
     {
+        $setting = UniversitySetting::first();
         $email = $request->email;
         $user = User::where('email', '=', $email)->first();
 
@@ -145,10 +146,10 @@ class LoginController extends Controller
             ]);
 
             $data = array('name' => $user->first_name . ' ' . $user->last_name, 'email' => $user->email, 'token' => $token);
-            Mail::send('admin.reset_password.password_reset', $data, function ($message) use ($user, $email) {
+            Mail::send('admin.reset_password.password_reset', $data, function ($message) use ($user, $email,$setting) {
                 $message->to($email, $user->first_name)->subject
                 ('Reset Password');
-                $message->from(env('MAIL_FROM_ADDRESS'), env('APP_NAME'));
+                $message->from(env('MAIL_FROM_ADDRESS'),$setting->getTranslation('title','en'));
             });
 
             return redirect()->route('emailSentBack');

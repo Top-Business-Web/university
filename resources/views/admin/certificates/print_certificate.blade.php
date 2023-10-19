@@ -101,7 +101,7 @@
                                     </table>
                                 </div>
                                 <div class="col-lg-3 col-3 d-flex justify-content-center">
-                                    {{ QrCode::size(100)->generate(route('certificates.registeration')) }}
+                                    {{ QrCode::size(100)->generate(route('/')) }}
                                 </div>
                             </div>
                             <div class="mb-2">

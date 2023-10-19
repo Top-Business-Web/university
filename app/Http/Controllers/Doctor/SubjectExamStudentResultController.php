@@ -26,7 +26,6 @@ class SubjectExamStudentResultController extends Controller
 
 
         $ids = SubjectUnitDoctor::query()
-            ->where('period', '=', period()->period)
             ->where('year', '=', period()->year_start)
             ->where('user_id', '=', auth()->id())
             ->get();
