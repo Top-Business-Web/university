@@ -51,32 +51,31 @@ class ProcessDegreeController extends Controller
                        ';
                     } else {
 
-                      return 'Delete Not Access';
+                        return 'Delete Not Access';
                     }
 
                 })
                 ->addColumn('exam_number', function ($process_degrees) {
 
-                   return @SubjectExamStudent::query()
-                       ->where('year','=',period()->year_start)
-                       ->where('period','=',period()->period)
-                           ->where('user_id', '=', Auth::id())
+                    return @SubjectExamStudent::query()
+                        ->where('year', '=', period()->year_start)
+                        ->where('period', '=', period()->period)
+                        ->where('user_id', '=', Auth::id())
+                        ->where('section',$process_degrees->section)
                         ->with('subject_exam')
-                        ->whereHas('subject_exam', fn(Builder $builder) =>
-                        $builder->where('subject_id', '=', $process_degrees->subject_id))
-                       ->where('session','=','استدراكيه')
-                       ->first()
-                       ->exam_number;
+                        ->whereHas('subject_exam', fn(Builder $builder)
+                        => $builder->where('subject_id', '=', $process_degrees->subject_id))
+                        ->first()
+                        ->exam_number;
                 })
-
                 ->addColumn('identifier_id', function ($process_degrees) {
                     return $process_degrees->user->identifier_id;
                 })
                 ->addColumn('student_name', function ($process_degrees) {
-                    return $process_degrees->user->first_name." ".$process_degrees->user->last_name;
+                    return $process_degrees->user->first_name . " " . $process_degrees->user->last_name;
                 })
                 ->addColumn('doctor_name', function ($process_degrees) {
-                    return @$process_degrees->doctor->first_name." ".@$process_degrees->doctor->last_name;
+                    return @$process_degrees->doctor->first_name . " " . @$process_degrees->doctor->last_name;
                 })
                 ->addColumn('request_date', function ($process_degrees) {
                     return $process_degrees->created_at->format('Y-m-d');
@@ -115,40 +114,39 @@ class ProcessDegreeController extends Controller
     {
 
         $subject_student = SubjectStudent::query()
-            ->where('subject_id','=',$id)
-            ->where('year', '=',period()->year_start)
-            ->where('period', '=',period()->period)
-            ->where('user_id','=',Auth::id())
+            ->where('subject_id', '=', $id)
+            ->where('year', '=', period()->year_start)
+            ->where('period', '=', period()->period)
+            ->where('user_id', '=', Auth::id())
             ->first();
 
 
         $subject = Subject::query()
-            ->where('id','=',$id)
+            ->where('id', '=', $id)
             ->first();
 
         $doctor_id = SubjectUnitDoctor::query()
-            ->where('subject_id','=',$id)
-            ->where('group_id','=',$subject_student->group_id)
-            ->where('year', '=',period()->year_start)
+            ->where('subject_id', '=', $id)
+            ->where('group_id', '=', $subject_student->group_id)
+            ->where('year', '=', period()->year_start)
             ->first()->user_id;
 
 
         $subjectExamStudent = SubjectExamStudent::query()
-            ->whereHas('subject_exam', fn(Builder $builder)=>
-            $builder->where('subject_id','=',$id)
+            ->whereHas('subject_exam', fn(Builder $builder) => $builder->where('subject_id', '=', $id)
             )
-            ->where('year','=',period()->year_start)
-            ->where('user_id','=',Auth::id())
+            ->where('year', '=', period()->year_start)
+            ->where('user_id', '=', Auth::id())
             ->first();
 
         $subjectExamStudentResult = SubjectExamStudentResult::query()
-            ->where('year','=',period()->year_start)
-            ->where('period','عاديه')
-            ->where('subject_id','=',$subject->id)
-            ->where('user_id','=',Auth::id())
+            ->where('year', '=', period()->year_start)
+            ->where('period', 'عاديه')
+            ->where('subject_id', '=', $subject->id)
+            ->where('user_id', '=', Auth::id())
             ->first();
 
-        return view('student.process_degree.normal.create',compact('subjectExamStudentResult','subject','doctor_id','subjectExamStudent'));
+        return view('student.process_degree.normal.create', compact('subjectExamStudentResult', 'subject', 'doctor_id', 'subjectExamStudent'));
     }
 
 
@@ -170,40 +168,40 @@ class ProcessDegreeController extends Controller
     {
 
         $subject_student = SubjectStudent::query()
-            ->where('subject_id','=',$id)
-            ->where('year', '=',period()->year_start)
-            ->where('period', '=',period()->period)
-            ->where('user_id','=',Auth::id())
-        ->first();
+            ->where('subject_id', '=', $id)
+            ->where('year', '=', period()->year_start)
+            ->where('period', '=', period()->period)
+            ->where('user_id', '=', Auth::id())
+            ->first();
 
         $subject = Subject::query()
-            ->where('id','=',$id)
+            ->where('id', '=', $id)
             ->first();
 
         $doctor_id = SubjectUnitDoctor::query()
-            ->where('subject_id','=',$id)
-            ->where('group_id','=',$subject_student->group_id)
-            ->where('year', '=',period()->year_start)
+            ->where('subject_id', '=', $id)
+            ->where('group_id', '=', $subject_student->group_id)
+            ->where('year', '=', period()->year_start)
             ->first()->user_id;
 
 
         $subjectExamStudent = SubjectExamStudent::query()
-            ->whereHas('subject_exam', fn(Builder $builder)=>
-            $builder->where('subject_id','=',$id)
-                ->where('session','=','استدراكيه')
+            ->whereHas('subject_exam', fn(Builder $builder) =>
+            $builder->where('subject_id', '=', $id)
+                ->where('session', '=', 'استدراكيه')
             )
-            ->where('year','=',period()->year_start)
-            ->where('user_id','=',Auth::id())
+            ->where('year', '=', period()->year_start)
+            ->where('user_id', '=', Auth::id())
             ->first();
 
         $subjectExamStudentResult = SubjectExamStudentResult::query()
-            ->where('year','=',period()->year_start)
-            ->where('period','استدراكيه')
-            ->where('subject_id','=',$subject->id)
-            ->where('user_id','=',Auth::id())
+            ->where('year', '=', period()->year_start)
+            ->where('period', 'استدراكيه')
+            ->where('subject_id', '=', $subject->id)
+            ->where('user_id', '=', Auth::id())
             ->first();
-
-        return view('student.process_degree.remedial.create',compact('subjectExamStudentResult','subject','doctor_id','subjectExamStudent'));
+        
+        return view('student.process_degree.remedial.create', compact('subjectExamStudentResult', 'subject', 'doctor_id', 'subjectExamStudent'));
 
     }
 
