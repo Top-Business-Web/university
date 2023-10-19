@@ -20,16 +20,41 @@
 
     <style>
 
-        table{
+        .dataTables_filter{
+            display: none;
+        }
+        .dataTables_length{
+            display: none;
+        }
+        .dataTables_info{
+            display: none;
+        }
+        .dataTables_paginate{
+            display: none;
+        }
+
+        table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before{
+            display: none !important;
+        }
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
+            display: none !important;
+        }
+
+        table {
             width: 100%;
             border: 1px solid black;
         }
-        thead{background-color: #eb9984;}
-        table td{
+
+        thead {
+            background-color: #eb9984;
+        }
+
+        table td {
             border: 1px solid black;
             padding: 1px;
             width: 10% !important;
         }
+
         .border1 {
             border: 1px solid #618597;
         }
@@ -53,20 +78,23 @@
         .image-logo1 img {
             height: 100px;
         }
+
         .border-color {
             border: 1px solid black;
             width: 40%;
             font-weight: bold;
         }
+
         .table td {
             padding: 0.2rem !important;
         }
+
         @media print {
             body {
                 font-size: 10px;
             }
 
-            .divPrint{
+            .divPrint {
                 width: 100px !important;
                 bottom: 14px;
                 position: relative;
@@ -83,31 +111,37 @@
             /*.print {*/
             /*    font-size: 10px;*/
             /*}*/
-
             /*.img-print {*/
             /*    width: 50px !important;*/
             /*}*/
-
             /*.mb-4 {*/
             /*    margin-bottom: 0px;*/
             /*}*/
-
             /*.mt-4 {*/
             /*    margin-top: 0px !important;*/
             /*}*/
-
             /*.image-logo1 {*/
             /*    margin-bottom: 0px;*/
             /*}*/
         }
+
         @media print {
             @page {
                 size: A4 landscape;
             }
+
             /*body {*/
             /*    transform: scale(1); !* Adjust the scale factor as needed *!*/
             /*    transform-origin: 0 0;*/
             /*}*/
+        }
+
+        @media (max-width: 576px) {
+            @page {
+                size: A4 landscape;
+            }
+
+
         }
     </style>
 </head>
@@ -167,12 +201,12 @@
                                 </table>
                             </div>
                             <div class=" col-2 d-flex justify-content-center divPrint">
-                                {!!  QrCode::size(120)->generate(route('subject_exams.print'))  !!}
+                                {!!  QrCode::size(120)->generate(route('/'))  !!}
                             </div>
                         </div>
                         <!--End Row -->
                         <!--start table -->
-                        <table>
+                        <table id="printDiv">
                             <thead>
                             <tr>
                                 <th class="min-w-50px">{{ trans('admin.unit_name') }}</th>
@@ -250,11 +284,21 @@
         </div>
     </div>
 </div>
+@include('admin.layouts.scripts')
 
 <script src="{{ asset('certificate_student_exam_assets') }}/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('certificate_student_exam_assets') }}/js/all.min.js"></script>
 <script>
     window.print();
+
+    $(document).ready(function () {
+        var table = $('#printDiv').DataTable({
+            "order": [[5, 'asc'], [6, 'asc']], // Initial sorting by the first column (Name) and then the second column (Age)
+            "columnDefs": [
+                {"targets": [0, 1], "orderData": [0, 1]} // Allow sorting by both columns
+            ],
+        });
+    });
 </script>
 </body>
 
