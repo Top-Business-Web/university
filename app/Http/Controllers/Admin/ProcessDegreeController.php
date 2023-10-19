@@ -102,6 +102,8 @@ class ProcessDegreeController extends Controller
                         ->first('id')->id;
 
                     return SubjectExamStudent::where('subject_exam_id',$id)
+                        ->where('section',$process_degrees->section)
+                        ->where('session',$process_degrees->period)
                     ->first('exam_number')->exam_number;
                 })
                 ->escapeColumns([])
