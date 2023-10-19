@@ -200,7 +200,7 @@ class ProcessDegreeController extends Controller
             ->where('subject_id', '=', $subject->id)
             ->where('user_id', '=', Auth::id())
             ->first();
-        
+
         return view('student.process_degree.remedial.create', compact('subjectExamStudentResult', 'subject', 'doctor_id', 'subjectExamStudent'));
 
     }
