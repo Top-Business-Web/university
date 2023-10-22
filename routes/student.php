@@ -52,4 +52,5 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
     //student edit profile
     Route::get('user-edit-profile-create', [ProfileController::class, 'userEditProfileCreate'])->name('user-edit-profile-create');
     Route::post('user-edit-profile', [ProfileController::class, 'userEditProfile'])->name('user-edit-profile');
+    
 });
