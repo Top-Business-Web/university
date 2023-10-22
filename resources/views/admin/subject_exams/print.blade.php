@@ -149,7 +149,7 @@
 <body>
 <div class="section text-right">
     <div class="container">
-        <div class="border1">
+        <div class="border1" id="divPrint">
             <div class="border2">
                 <div class="border3">
                     <div class="p-5">
@@ -289,8 +289,10 @@
 
 <script src="{{ asset('certificate_student_exam_assets') }}/js/bootstrap.bundle.min.js"></script>
 <script src="{{ asset('certificate_student_exam_assets') }}/js/all.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script>
-    window.print();
+    // window.print();
 
     $(document).ready(function () {
         var table = $('#printDiv').DataTable({
@@ -300,6 +302,39 @@
             ],
         });
     });
+
+
+
+    $(document).ready(function () {
+    function CreatePDFfromHTML() {
+        var HTML_Width = $('#divPrint').width();
+        var HTML_Height = $('#divPrint').height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = HTML_Height + (top_left_margin * 2); // Change the height for landscape
+
+        // Set the canvas image width and height for landscape
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Width / PDF_Width) - 1; // Calculate pages based on width
+
+        html2canvas($('#divPrint')[0]).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('l', 'pt', [PDF_Width, PDF_Height]); // 'l' for landscape
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (var i = 1; i <= totalPDFPages; i++) {
+                pdf.addPage([PDF_Width, PDF_Height]); // Set page size for landscape
+                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            }
+            pdf.save("Reportpdf.pdf"); // Save the PDF
+        });
+    }
+    setTimeout(function () {
+        CreatePDFfromHTML();
+    }, 3000);
+});
+
 
 </script>
 </body>
