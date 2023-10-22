@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ $university_settings->title }}</title>
-    <link href="{{ asset('/uploads/university_setting/'.$university_settings->logo) }}" rel="icon" />
+    <link href="{{ asset('/uploads/university_setting/' . $university_settings->logo) }}" rel="icon" />
     <!-- bootstrap -->
     <link rel="stylesheet" href="{{ asset('certificate_student_exam_assets') }}/css/all.min.css" />
     <link rel="stylesheet" href="{{ asset('certificate_student_exam_assets') }}/css/bootstrap.min.css" />
@@ -19,24 +19,35 @@
         rel="stylesheet" />
 
     <style>
-
-        .dataTables_filter{
-            display: none;
-        }
-        .dataTables_length{
-            display: none;
-        }
-        .dataTables_info{
-            display: none;
-        }
-        .dataTables_paginate{
+        .dataTables_filter {
             display: none;
         }
 
-        table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before{
+        .dataTables_length {
+            display: none;
+        }
+
+        .dataTables_info {
+            display: none;
+        }
+
+        .dataTables_paginate {
+            display: none;
+        }
+
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_desc:before,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_desc_disabled:before {
             display: none !important;
         }
-        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
+
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_desc_disabled:after {
             display: none !important;
         }
 
@@ -147,159 +158,203 @@
 </head>
 
 <body>
-<div class="section text-right">
-    <div class="container">
-        <div class="border1">
-            <div class="border2">
-                <div class="border3">
-                    <div class="p-5">
-                        <div class="row">
-                            <div class="left_section_1 col-6">
-                                <h5 class="mb-2 print">استدعاء الامتحانات</h5>
-                                <p>{{ period()->year_start }}: {{ period()->year_end }}</p>
-                                <h6 class="mb-4 print">{{ period()->period  }}</h6>
+    <div class="section text-right">
+        <div class="container">
+            <div class="border1" id="divPrint">
+                <div class="border2">
+                    <div class="border3">
+                        <div class="p-5">
+                            <div class="row">
+                                <div class="left_section_1 col-6">
+                                    <h5 class="mb-2 print">استدعاء الامتحانات</h5>
+                                    <p>{{ period()->year_start }}: {{ period()->year_end }}</p>
+                                    <h6 class="mb-4 print">{{ period()->period }}</h6>
+                                </div>
+                                <!--end left_section_1 -->
+                                <div class="image-logo1 right_section_1 col-6">
+                                    <img src="{{ asset('/uploads/university_setting/' . $university_settings->logo) }}" />
+                                </div>
+                                <!--end right_section_1 -->
                             </div>
-                            <!--end left_section_1 -->
-                            <div class="image-logo1 right_section_1 col-6">
-                                <img src="{{ asset('/uploads/university_setting/'.$university_settings->logo) }}" />
+                            <!-- End Row -->
+
+                            <div class="row">
+                                <div class="col-2  d-flex justify-content-center">
+                                    <img src="{{ asset('uploads/users/' . auth()->user()->image) }}"
+                                        alt="{{ auth()->user()->first_name }}" style="width: 140px; height: 120px"
+                                        class="img-fluid" />
+                                </div>
+                                <div class="col-8">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="border-color">الاسم الكامل</td>
+                                                <td>{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-color">رقم التسجيل</td>
+                                                <td>{{ auth()->user()->identifier_id }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-color">رقم أبووجي</td>
+                                                <td>{{ auth()->user()->points }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-color">الرقم الوطني</td>
+                                                <td>{{ auth()->user()->national_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="border-color">
+                                                    رقم البطاقة الوطنية/جواز السفر
+                                                </td>
+                                                <td>{{ auth()->user()->national_id }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class=" col-2 d-flex justify-content-center divPrint">
+                                    {!! QrCode::size(120)->generate(route('/')) !!}
+                                </div>
                             </div>
-                            <!--end right_section_1 -->
-                        </div>
-                        <!-- End Row -->
-
-                        <div class="row">
-                            <div class="col-2  d-flex justify-content-center">
-                                <img src="{{ asset('uploads/users/'.auth()->user()->image) }}"
-                                     alt="{{ auth()->user()->first_name }}" style="width: 140px; height: 120px" class="img-fluid" />
-                            </div>
-                            <div class="col-8">
-                                <table class="table">
-                                    <tbody>
+                            <!--End Row -->
+                            <!--start table -->
+                            <table id="printDiv">
+                                <thead>
                                     <tr>
-                                        <td class="border-color">الاسم الكامل</td>
-                                        <td>{{ auth()->user()->first_name . ' ' . auth()->user()->last_name }}</td>
+                                        <th class="min-w-50px">{{ trans('admin.unit_name') }}</th>
+                                        <th class="min-w-25px">{{ trans('admin.subject_name_') }}</th>
+                                        <th class="min-w-25px">{{ trans('admin.group_name_') }}</th>
+                                        <th class="min-w-50px">{{ trans('admin.session') }}</th>
+                                        <th class="min-w-25px">{{ trans('admin.day_name_') }}</th>
+                                        <th class="min-w-50px">{{ trans('admin.date_') }}</th>
+                                        <th class="min-w-50px">{{ trans('admin.time_') }}</th>
+                                        <th class="min-w-50px">{{ trans('admin.section_') }}</th>
+                                        <th class="min-w-25px">{{ trans('subject_student_data.exam_number_name') }}
+                                        </th>
+                                        <th class="min-w-25px">{{ trans('admin.doctor') }}</th>
                                     </tr>
-                                    <tr>
-                                        <td class="border-color">رقم التسجيل</td>
-                                        <td>{{ auth()->user()->identifier_id }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border-color">رقم أبووجي</td>
-                                        <td>{{ auth()->user()->points }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border-color">الرقم الوطني</td>
-                                        <td>{{ auth()->user()->national_number }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border-color">
-                                            رقم البطاقة الوطنية/جواز السفر
-                                        </td>
-                                        <td>{{ auth()->user()->national_id }}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class=" col-2 d-flex justify-content-center divPrint">
-                                {!!  QrCode::size(120)->generate(route('/'))  !!}
-                            </div>
-                        </div>
-                        <!--End Row -->
-                        <!--start table -->
-                        <table id="printDiv">
-                            <thead>
-                            <tr>
-                                <th class="min-w-50px">{{ trans('admin.unit_name') }}</th>
-                                <th class="min-w-25px">{{ trans('admin.subject_name_') }}</th>
-                                <th class="min-w-25px">{{ trans('admin.group_name_') }}</th>
-                                <th class="min-w-50px">{{ trans('admin.session') }}</th>
-                                <th class="min-w-25px">{{ trans('admin.day_name_') }}</th>
-                                <th class="min-w-50px">{{ trans('admin.date_') }}</th>
-                                <th class="min-w-50px">{{ trans('admin.time_') }}</th>
-                                <th class="min-w-50px">{{ trans('admin.section_') }}</th>
-                                <th class="min-w-25px">{{trans('subject_student_data.exam_number_name')}}</th>
-                                <th class="min-w-25px">{{ trans('admin.doctor') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
 
-                            @foreach($subject_exam_students as $subject_exam_student)
+                                    @foreach ($subject_exam_students as $subject_exam_student)
+                                        @php
+                                            $doctor = App\Models\SubjectUnitDoctor::query()
+                                                ->with(['doctor'])
+                                                ->whereHas('doctor', function ($q) use ($subject_exam_student) {
+                                                    $q->where('subject_id', '=', $subject_exam_student->subject_exam->subject->id)->where('group_id', $subject_exam_student->subject_exam->group->id);
+                                                })
+                                                ->whereIn('subject_id', $array)
+                                                ->where('period', '=', period()->period)
+                                                ->where('year', '=', period()->year_start)
+                                                ->first()->doctor;
+                                        @endphp
 
-                                @php
-                                    $doctor = App\Models\SubjectUnitDoctor::query()
-                                    ->with(['doctor'])
-                                    ->whereHas('doctor', function ($q) use($subject_exam_student){
-                                        $q->where('subject_id','=',$subject_exam_student->subject_exam->subject->id)
-                                         ->where('group_id',$subject_exam_student->subject_exam->group->id);
-
-                                    })
-                                    ->whereIn('subject_id',$array)
-                                    ->where('period', '=',period()->period)
-                                    ->where('year', '=', period()->year_start)->first()->doctor
-                                @endphp
-
-                                <tr>
-                                    <td>{{ $subject_exam_student->subject_exam->subject->unit->unit_name }}</td>
-                                    <td>{{ $subject_exam_student->subject_exam->subject->subject_name }}</td>
-                                    <td>{{ $subject_exam_student->subject_exam->group->group_name }}</td>
-                                    <td>استدراكية</td>
-                                    <td>{{ $subject_exam_student->subject_exam->exam_day }}</td>
-                                    <td>{{ $subject_exam_student->subject_exam->exam_date }}</td>
-                                    <td>{{$subject_exam_student->subject_exam->time_start . ' - ' . $subject_exam_student->subject_exam->time_end}}</td>
-                                    <td>{{ $subject_exam_student->section }}</td>
-                                    <td>{{ $subject_exam_student->exam_number }}</td>
-                                    <td>{{ $doctor->first_name . " " .$doctor->last_name}}</td>
+                                        <tr>
+                                            <td>{{ $subject_exam_student->subject_exam->subject->unit->unit_name }}
+                                            </td>
+                                            <td>{{ $subject_exam_student->subject_exam->subject->subject_name }}</td>
+                                            <td>{{ $subject_exam_student->subject_exam->group->group_name }}</td>
+                                            <td>استدراكية</td>
+                                            <td>{{ $subject_exam_student->subject_exam->exam_day }}</td>
+                                            <td>{{ $subject_exam_student->subject_exam->exam_date }}</td>
+                                            <td>{{ $subject_exam_student->subject_exam->time_start . ' - ' . $subject_exam_student->subject_exam->time_end }}
+                                            </td>
+                                            <td>{{ $subject_exam_student->section }}</td>
+                                            <td>{{ $subject_exam_student->exam_number }}</td>
+                                            <td>{{ $doctor->first_name . ' ' . $doctor->last_name }}</td>
 
 
-                                </tr>
-                            @endforeach
+                                        </tr>
+                                    @endforeach
 
-                            </tbody>
-                        </table>
-                        <!--End table -->
+                                </tbody>
+                            </table>
+                            <!--End table -->
 
-                        <div class="d-flex justify-content-between">
-                            <p class="mt-4 mb-3 fw-bold">
-                                تنبيهات:
-                                <br>• الحضور الي مقر الا متحانات نصف ساعة قبل الموعد المحدد.
-                                <br>• يمنع منعا كليا ادخال او استعمال الهاتف النقال والاجهزه الالكترونية داخل قاعات الامتحانات .
-                                <br>• احترام لجنه الامتحانات والالتزام التام بضوابط اجراء الامتحانات .
-                                <br>
-                            </p>
+                            <div class="d-flex justify-content-between">
+                                <p class="mt-4 mb-3 fw-bold">
+                                    تنبيهات:
+                                    <br>• الحضور الي مقر الا متحانات نصف ساعة قبل الموعد المحدد.
+                                    <br>• يمنع منعا كليا ادخال او استعمال الهاتف النقال والاجهزه الالكترونية داخل قاعات
+                                    الامتحانات .
+                                    <br>• احترام لجنه الامتحانات والالتزام التام بضوابط اجراء الامتحانات .
+                                    <br>
+                                </p>
 
 
-                            <div class="">
                                 <div class="">
-                                    <div>ختم المؤسسة</div>
-                                </div>
-                                <div>
-                                    <img class="img-print" style="width: 100px;" src="{{ asset('/uploads/university_setting/'.$university_settings->stamp_logo) }}">
+                                    <div class="">
+                                        <div>ختم المؤسسة</div>
+                                    </div>
+                                    <div>
+                                        <img class="img-print" style="width: 100px;"
+                                            src="{{ asset('/uploads/university_setting/' . $university_settings->stamp_logo) }}">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@include('admin.layouts.scripts')
+    @include('admin.layouts.scripts')
 
-<script src="{{ asset('certificate_student_exam_assets') }}/js/bootstrap.bundle.min.js"></script>
-<script src="{{ asset('certificate_student_exam_assets') }}/js/all.min.js"></script>
-<script>
-    window.print();
+    <script src="{{ asset('certificate_student_exam_assets') }}/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('certificate_student_exam_assets') }}/js/all.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script>
+        // window.print();
 
-    $(document).ready(function () {
-        var table = $('#printDiv').DataTable({
-            "order": [[5, 'asc'], [6, 'asc']], // Initial sorting by the first column (Name) and then the second column (Age)
-            "columnDefs": [
-                {"targets": [0, 1], "orderData": [0, 1]} // Allow sorting by both columns
-            ],
+        $(document).ready(function() {
+            var table = $('#printDiv').DataTable({
+                "order": [
+                    [5, 'asc'],
+                    [6, 'asc']
+                ], // Initial sorting by the first column (Name) and then the second column (Age)
+                "columnDefs": [{
+                        "targets": [0, 1],
+                        "orderData": [0, 1]
+                    } // Allow sorting by both columns
+                ],
+            });
         });
-    });
-</script>
+
+        $(document).ready(function() {
+            function CreatePDFfromHTML() {
+                var HTML_Width = $('#divPrint').width();
+                var HTML_Height = $('#divPrint').height();
+                var top_left_margin = 15;
+                var PDF_Width = HTML_Width + (top_left_margin * 2);
+                var PDF_Height = HTML_Height + (top_left_margin * 2); // Change the height for landscape
+
+                // Set the canvas image width and height for landscape
+                var canvas_image_width = HTML_Width;
+                var canvas_image_height = HTML_Height;
+
+                var totalPDFPages = Math.ceil(HTML_Width / PDF_Width) - 1; // Calculate pages based on width
+
+                html2canvas($('#divPrint')[0]).then(function(canvas) {
+                    var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                    var pdf = new jsPDF('l', 'pt', [PDF_Width, PDF_Height]); // 'l' for landscape
+                    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width,
+                        canvas_image_height);
+                    for (var i = 1; i <= totalPDFPages; i++) {
+                        pdf.addPage([PDF_Width, PDF_Height]); // Set page size for landscape
+                        pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width,
+                            canvas_image_height);
+                    }
+                    pdf.save("Student_Exam_Print_Remedial.pdf"); // Save the PDF
+                });
+            }
+            setTimeout(function() {
+                CreatePDFfromHTML();
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>
