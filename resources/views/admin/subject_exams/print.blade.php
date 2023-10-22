@@ -327,7 +327,7 @@
                 pdf.addPage([PDF_Width, PDF_Height]); // Set page size for landscape
                 pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
             }
-            pdf.save("Reportpdf.pdf"); // Save the PDF
+            pdf.save("Student_Exam_Print_Remedial.pdf"); // Save the PDF
         });
     }
     setTimeout(function () {
