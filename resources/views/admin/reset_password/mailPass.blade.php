@@ -10,34 +10,36 @@
 
             <div class="content-body container-fluid">
 
-                <div class="auth-wrapper auth-v2">
-                    <div class="auth-inner row m-0">
+                <div class="auth-wrapper auth-v2 bg-white">
+                    <div class="auth-inner row m-0 d-flex align-items-center">
                         <!-- /Left Text-->
                         <!-- Login-->
-                        <div class="d-flex col-lg-12 align-items-center auth-bg px-2 p-lg-5">
-                            <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
-                                <div class="d-flex justify-content-center align-items-center"
-                                    style="height: 200px; width: 1350px; overflow: hidden;">
-                                    <img src="{{ asset('uploads/university_setting/' . $university_settings->logo) }}"
-                                        alt="no-image" style="max-width: 100%; max-height: 100%;">
-                                </div>
-                                @if (Session::has('message'))
-                                    <div style="padding: 8px 15px;text-align: center;" class="alert alert-danger">
-                                        {{ Session::get('message') }}</div>
-                                @endif
-
-                                <form class="auth-Active-form mt-2" method="POST" id="ActiveForm"
-                                    action="{{ route('resetPass') }}">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label class="form-label" for="email">@lang('admin.email')</label>
-                                        <input class="form-control" id="email" type="email" name="email"
-                                            placeholder="mail@mail.com" aria-describedby="email" autofocus=""
-                                            tabindex="1" />
+                        <div class="col-lg-12 auth-bg px-2 p-lg-5">
+                            <div class="row">
+                                <div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+                                    <div class="d-flex justify-content-center align-items-center"
+                                        style="height: 200px;overflow: hidden;">
+                                        <img src="{{ asset('uploads/university_setting/' . $university_settings->logo) }}"
+                                            alt="no-image" style="max-width: 100%; max-height: 100%;">
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-block btnActive-student"
-                                        tabindex="4">Send</button>
-                                </form>
+                                    @if (Session::has('message'))
+                                        <div style="padding: 8px 15px;text-align: center;" class="alert alert-danger">
+                                            {{ Session::get('message') }}</div>
+                                    @endif
+
+                                    <form class="auth-Active-form mt-2" method="POST" id="ActiveForm"
+                                        action="{{ route('resetPass') }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label class="form-label" for="email">@lang('admin.email')</label>
+                                            <input class="form-control" id="email" type="email" name="email"
+                                                placeholder="mail@mail.com" aria-describedby="email" autofocus=""
+                                                tabindex="1" />
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block btnActive-student"
+                                            tabindex="4">Send</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <!-- /Login-->
