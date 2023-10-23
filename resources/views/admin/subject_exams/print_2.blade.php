@@ -90,8 +90,16 @@
         }
 
         @media print {
+            /*@page {*/
+            /*    size: A4 landscape;*/
+            /*}*/
             body {
                 font-size: 10px;
+            }
+
+            @page {
+                size: A4 landscape;
+                margin: 5mm; /* You can adjust the margin as needed */
             }
 
             .divPrint {
@@ -108,39 +116,21 @@
                 padding: 10px !important;
             }
 
-            /*.print {*/
-            /*    font-size: 10px;*/
-            /*}*/
-            /*.img-print {*/
-            /*    width: 50px !important;*/
-            /*}*/
-            /*.mb-4 {*/
-            /*    margin-bottom: 0px;*/
-            /*}*/
-            /*.mt-4 {*/
-            /*    margin-top: 0px !important;*/
-            /*}*/
-            /*.image-logo1 {*/
-            /*    margin-bottom: 0px;*/
-            /*}*/
-        }
-
-        @media print {
-            @page {
-                size: A4 landscape;
+            .print {
+                font-size: 10px;
             }
-
-            /*body {*/
-            /*    transform: scale(1); !* Adjust the scale factor as needed *!*/
-            /*    transform-origin: 0 0;*/
-            /*}*/
-        }
-
-        @media (max-width: 576px) {
-            @page {
-                size: A4 landscape;
+            .img-print {
+                width: 10px !important;
             }
-
+            .mb-4 {
+                margin-bottom: 0px;
+            }
+            .mt-4 {
+                margin-top: 0px !important;
+            }
+            .image-logo1 {
+                margin-bottom: 0px;
+            }
 
         }
     </style>
