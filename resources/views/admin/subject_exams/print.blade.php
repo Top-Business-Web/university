@@ -94,7 +94,7 @@
             /*    size: A4 landscape;*/
             /*}*/
             body {
-                font-size: 9px;
+                font-size: 8px;
             }
 
             @page {
