@@ -90,16 +90,18 @@
         }
 
         @media print {
-            /*@page {*/
-            /*    size: A4 landscape;*/
-            /*}*/
             body {
-                font-size: 8px;
+                font-size: 10px;
+                margin-bottom: 0px !important;
             }
 
             @page {
                 size: A4 landscape;
                 margin: 5mm; /* You can adjust the margin as needed */
+            }
+            .logo-stud{
+                width: 90px !important;
+                height: 90px !important;
             }
 
             .divPrint {
@@ -112,6 +114,11 @@
                 padding: 0.2rem !important;
             }
 
+            .print-div td {
+                padding: 1px !important;
+                font-size: .65rem !important;
+            }
+
             .p-5 {
                 padding: 10px !important;
             }
@@ -120,7 +127,7 @@
                 font-size: 10px;
             }
             .img-print {
-                width: 10px !important;
+                width: 90px !important;
             }
             .mb-4 {
                 margin-bottom: 0px;
@@ -162,7 +169,7 @@
                             <div class="col-2  d-flex justify-content-center">
                                 <img src="{{ asset('uploads/users/'.auth()->user()->image) }}"
                                      alt="{{ auth()->user()->first_name }}" style="width: 140px; height: 120px"
-                                     class="img-fluid"/>
+                                     class="img-fluid logo-stud"/>
                             </div>
                             <div class="col-8">
                                 <table class="table">
@@ -198,7 +205,7 @@
                         </div>
                         <!--End Row -->
                         <!--start table -->
-                        <table id="printDiv">
+                        <table id="printDiv" class="print-div">
                             <thead>
                             <tr>
                                 <th class="min-w-50px">{{ trans('admin.unit_name') }}</th>
