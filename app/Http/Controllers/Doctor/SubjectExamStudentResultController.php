@@ -40,7 +40,7 @@ class SubjectExamStudentResultController extends Controller
                 ->get();
             $subject_exam_student_results = $subject_exam_student_results->concat($data);
         }
-        
+
         if ($request->ajax()) {
 
             return Datatables::of($subject_exam_student_results)

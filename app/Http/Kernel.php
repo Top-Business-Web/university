@@ -67,6 +67,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'check' => \App\Http\Middleware\CheckAuth::class,
         'forbidden' => \App\Http\Middleware\CheckForbidden::class,
+        'forbidden_employee' => \App\Http\Middleware\CheckForbiddenEmployee::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

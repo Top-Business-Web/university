@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\AdminExport;
+use App\Http\Middleware\CheckForbidden;
 use App\Imports\AdminImport;
 use App\Models\DataModification;
 use App\Models\DepartmentBranchStudent;
@@ -22,15 +23,12 @@ use App\Http\Requests\AdminUpdateRequest;
 
 class AdminController extends Controller
 {
-
     public function index(request $request)
     {
 
         if ($request->ajax()) {
             $admins = User::query()
-                ->where('user_type', '=', 'manger')
-                ->orWhere('user_type', '=', 'factor')
-                ->orWhere('user_type', '=', 'employee')
+                ->whereNotIn('user_type', ['student', 'doctor'])
                 ->latest()
                 ->get();
 
@@ -56,7 +54,25 @@ class AdminController extends Controller
                     <img alt="image" class="avatar avatar-md rounded-circle" src="' . asset("uploads/users/default/avatar2.jfif") . '">
                     ';
                     }
-
+                    /*
+                     * manger
+                    employee
+                    window
+                    treasury
+                    division*/
+                })
+                ->editColumn('user_type', function ($admin) {
+                    if ($admin->user_type == 'manger') {
+                        return '<span class="badge badge-primary">'.__('login.manger').'</span>';
+                    } elseif ($admin->user_type == 'employee') {
+                        return '<span class="badge badge-success">'.__('login.employee').'</span>';
+                    } elseif ($admin->user_type == 'window') {
+                        return '<span class="badge badge-secondary">'.__('login.window').'</span>';
+                    } elseif ($admin->user_type == 'treasury') {
+                        return '<span class="badge badge-secondary">'.__('login.treasury').'</span>';
+                    } elseif($admin->user_type == 'division'){
+                        return '<span class="badge badge-secondary">'.__('login.division').'</span>';
+                    }
                 })
                 ->escapeColumns([])
                 ->make(true);
@@ -139,7 +155,8 @@ class AdminController extends Controller
     }
 
 
-    public function update(AdminUpdateRequest $request): JsonResponse{
+    public function update(AdminUpdateRequest $request): JsonResponse
+    {
 
         $admin = User::query()
             ->findOrFail($request->id);
@@ -151,8 +168,8 @@ class AdminController extends Controller
             $image->move($destinationPath, $profileImage);
             $request['image'] = "$profileImage";
 
-            if (file_exists(public_path('uploads/users/'.$admin->image)) && $admin->image != null) {
-                unlink(public_path('uploads/users/'.$admin->image));
+            if (file_exists(public_path('uploads/users/' . $admin->image)) && $admin->image != null) {
+                unlink(public_path('uploads/users/' . $admin->image));
             }
         }
 
@@ -165,6 +182,7 @@ class AdminController extends Controller
             'image' => $request->image != null ? $profileImage : $admin->image,
             'national_id' => $request->national_id,
             'email' => $request->email,
+            'user_type' => $request->user_type,
             'password' => Hash::make($request->password),
             'job_id' => $request->job_id,
 
@@ -186,7 +204,7 @@ class AdminController extends Controller
         $user_data = DataModification::where('user_id', $user->id)->get();
 
         $departmentStudent = DepartmentBranchStudent::query()
-            ->where('user_id',$user->id)
+            ->where('user_id', $user->id)
             ->first('department_branch_id');
 
         $period = Period::query()
@@ -200,7 +218,7 @@ class AdminController extends Controller
             ->get();
 
 
-        return view('admin.admins.profile',compact('user', 'user_data','subject_students','period','departmentStudent'));
+        return view('admin.admins.profile', compact('user', 'user_data', 'subject_students', 'period', 'departmentStudent'));
     }
 
     public function updatePass(Request $request): JsonResponse
@@ -209,19 +227,19 @@ class AdminController extends Controller
             ->findOrFail($request->id);
 
 
-        if (!Hash::check($request->old_password,$user->password)){
+        if (!Hash::check($request->old_password, $user->password)) {
 
             return response()->json(['status' => 201]);
 
-        }elseif ($request->password != $request->password_confirm){
+        } elseif ($request->password != $request->password_confirm) {
 
             return response()->json(['status' => 203]);
 
-        } else{
+        } else {
 
             $user->update(['password' => Hash::make($request->password)]);
 
-             return response()->json(['status' => 200]);
+            return response()->json(['status' => 200]);
         }
     }
 
@@ -233,7 +251,7 @@ class AdminController extends Controller
 
     public function importAdmin(Request $request): JsonResponse
     {
-        $import = Excel::import(new AdminImport(),$request->exelFile);
+        $import = Excel::import(new AdminImport(), $request->exelFile);
         if ($import) {
             return response()->json(['status' => 200]);
         } else {

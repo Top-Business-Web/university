@@ -81,15 +81,11 @@ Route::get('/emailSentBack', function () {
 
 //    Route::view('emailSentBack','admin.mail.emailSentBack')->name('emailSentBack');
 
-Route::get('/forbidden', function () {
-    return view('admin.error.forbidden');
-})->name('forbidden');
-
 Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth']], function () {
 
 
     ###################### Category #############################
-    Route::resource('categories', CategoryController::class)->middleware('forbidden');
+    Route::resource('categories', CategoryController::class)->middleware(['forbidden','forbidden_employee']);
 
     Route::get('/', [HomeController::class, 'index'])->name('admin.home');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
@@ -104,10 +100,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
 
 
     #### Admins ####
-    Route::resource('admins', AdminController::class)->except(['show'])->middleware('forbidden');
-    Route::post('admins.delete', [AdminController::class, 'delete'])->name('admins.delete')->middleware('forbidden');
-    Route::get('exportAdmin', [AdminController::class, 'exportAdmin'])->name('exportAdmin')->middleware('forbidden');
-    Route::post('importAdmin', [AdminController::class, 'importAdmin'])->name('importAdmin')->middleware('forbidden');
+    Route::resource('admins', AdminController::class)->except(['show'])->middleware(['forbidden','forbidden_employee']);
+    Route::post('admins.delete', [AdminController::class, 'delete'])->name('admins.delete')->middleware(['forbidden','forbidden_employee']);
+    Route::get('exportAdmin', [AdminController::class, 'exportAdmin'])->name('exportAdmin')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importAdmin', [AdminController::class, 'importAdmin'])->name('importAdmin')->middleware(['forbidden','forbidden_employee']);
 
     //user
     Route::get('profile', [AdminController::class, 'profile'])->name('profile');
@@ -141,10 +137,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
     });
 
     #### user branches ####
-    Route::resource('userBranches', DepartmentBranchStudentController::class)->middleware('forbidden');
-    Route::get('getBranchesDepartment', [DepartmentBranchStudentController::class, 'getBranches'])->name('getBranches')->middleware('forbidden');
-    Route::get('exportDepartmentBranchStudent', [DepartmentBranchStudentController::class, 'exportDepartmentBranchStudent'])->name('exportDepartmentBranchStudent')->middleware('forbidden');
-    Route::post('importDepartmentBranchStudent', [DepartmentBranchStudentController::class, 'importDepartmentBranchStudent'])->name('importDepartmentBranchStudent')->middleware('forbidden');
+    Route::resource('userBranches', DepartmentBranchStudentController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::get('getBranchesDepartment', [DepartmentBranchStudentController::class, 'getBranches'])->name('getBranches')->middleware(['forbidden']);
+    Route::get('exportDepartmentBranchStudent', [DepartmentBranchStudentController::class, 'exportDepartmentBranchStudent'])->name('exportDepartmentBranchStudent')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importDepartmentBranchStudent', [DepartmentBranchStudentController::class, 'importDepartmentBranchStudent'])->name('importDepartmentBranchStudent')->middleware(['forbidden','forbidden_employee']);
 
 
     #### students types ####
@@ -189,27 +185,27 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
     #### Subject Student ####
     Route::resource('subject_student', SubjectStudentController::class);
     Route::get('subject_student_U', [SubjectStudentController::class, 'Studentindex'])->name('Studentindex');
-    Route::get('exportSubjectStudent', [SubjectStudentController::class, 'exportSubjectStudent'])->name('exportSubjectStudent')->middleware('forbidden');
-    Route::post('importSubjectStudent', [SubjectStudentController::class, 'importSubjectStudent'])->name('importSubjectStudent')->middleware('forbidden');
+    Route::get('exportSubjectStudent', [SubjectStudentController::class, 'exportSubjectStudent'])->name('exportSubjectStudent')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importSubjectStudent', [SubjectStudentController::class, 'importSubjectStudent'])->name('importSubjectStudent')->middleware(['forbidden','forbidden_employee']);
 
 
     #### Subject Unit Doctor ####
-    Route::resource('subject_unit_doctor', SubjectUnitDoctorController::class)->middleware('forbidden');
-    Route::get('getAllSubjectsOfFUnitId', [SubjectUnitDoctorController::class, 'getAllSubjectsOfUnitId'])->name('dashboard.getAllSubjectsOfUnitId')->middleware('forbidden');
+    Route::resource('subject_unit_doctor', SubjectUnitDoctorController::class)->middleware(['forbidden']);
+    Route::get('getAllSubjectsOfFUnitId', [SubjectUnitDoctorController::class, 'getAllSubjectsOfUnitId'])->name('dashboard.getAllSubjectsOfUnitId')->middleware(['forbidden']);
 
     #### University Setting
-    Route::resource('university_settings', UniversitySettingController::class)->middleware('forbidden');
-    Route::resource('facultyCount', FacultyCountController::class)->middleware('forbidden');
-    Route::post('maintenanceCheck', [UniversitySettingController::class, 'maintenanceCheck'])->name('maintenanceCheck')->middleware('forbidden');
+    Route::resource('university_settings', UniversitySettingController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::resource('facultyCount', FacultyCountController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::post('maintenanceCheck', [UniversitySettingController::class, 'maintenanceCheck'])->name('maintenanceCheck')->middleware(['forbidden','forbidden_employee']);
 
     #### Subject Exam ####
     Route::resource('subject_exams', SubjectExamController::class);
     Route::get('/students-exam-print/', [SubjectExamController::class, 'student_exam_print'])->name('subject_exams.print');
     Route::get('/students-exam-print-2/', [SubjectExamController::class, 'student_exam_print_2'])->name('subject_exams.printRemedial');
-    Route::get('remedial_session', [SubjectExamController::class, 'remedialSession'])->name('remedialSession')->middleware('forbidden');
-    Route::get('normal_session', [SubjectExamController::class, 'normalSession'])->name('normalSession')->middleware('forbidden');
-    Route::get('create_remedial', [SubjectExamController::class, 'createRemedial'])->name('createRemedial')->middleware('forbidden');
-    Route::get('getAllSubjectOfDepartmentBranchById', [SubjectExamController::class, 'getSubject'])->name('getAllSubjectOfDepartmentBranchById')->middleware('forbidden');
+    Route::get('remedial_session', [SubjectExamController::class, 'remedialSession'])->name('remedialSession')->middleware(['forbidden','forbidden_employee']);
+    Route::get('normal_session', [SubjectExamController::class, 'normalSession'])->name('normalSession')->middleware(['forbidden','forbidden_employee']);
+    Route::get('create_remedial', [SubjectExamController::class, 'createRemedial'])->name('createRemedial')->middleware(['forbidden','forbidden_employee']);
+    Route::get('getAllSubjectOfDepartmentBranchById', [SubjectExamController::class, 'getSubject'])->name('getAllSubjectOfDepartmentBranchById')->middleware(['forbidden','forbidden_employee']);
 
     Route::get('subject_exams/students/all', [\App\Http\Controllers\Student\SubjectExamController::class, 'index'])->name('subject_exams.students.all');
 
@@ -225,45 +221,45 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
 
     Route::get('printSubjectExamStudent/{id?}', [SubjectExamStudentController::class, 'printSubjectExamStudent'])->name('printSubjectExamStudent');
     #### Element ####
-    Route::resource('elements', ElementController::class)->middleware('forbidden');
-    Route::get('exportElement', [ElementController::class, 'exportElement'])->name('exportElement')->middleware('forbidden');
-    Route::post('importElement', [ElementController::class, 'importElement'])->name('importElement')->middleware('forbidden');
+    Route::resource('elements', ElementController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::get('exportElement', [ElementController::class, 'exportElement'])->name('exportElement')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importElement', [ElementController::class, 'importElement'])->name('importElement')->middleware(['forbidden','forbidden_employee']);
 
     #### process Degrees ####
 
-    Route::resource('process_degrees', ProcessDegreeController::class)->middleware('forbidden');
-    Route::get('get_doctor', [ProcessDegreeController::class, 'getDoctor'])->name('getDoctor')->middleware('forbidden');
-    Route::post('importProcessDegree', [ProcessDegreeController::class, 'import'])->name('importProcessDegree')->middleware('forbidden');
-    Route::get('exportProcessDegree', [ProcessDegreeController::class, 'export'])->name('exportProcessDegree')->middleware('forbidden');
+    Route::resource('process_degrees', ProcessDegreeController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::get('get_doctor', [ProcessDegreeController::class, 'getDoctor'])->name('getDoctor')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importProcessDegree', [ProcessDegreeController::class, 'import'])->name('importProcessDegree')->middleware(['forbidden','forbidden_employee']);
+    Route::get('exportProcessDegree', [ProcessDegreeController::class, 'export'])->name('exportProcessDegree')->middleware(['forbidden','forbidden_employee']);
 
 
     #### Subject Exam Student Result ####
-    Route::resource('subject_exam_student_result', SubjectExamStudentResultController::class)->middleware('forbidden');
-    Route::get('results/remedial', [SubjectExamStudentResultController::class, 'index2'])->name('results.remedial')->middleware('forbidden');
+    Route::resource('subject_exam_student_result', SubjectExamStudentResultController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::get('results/remedial', [SubjectExamStudentResultController::class, 'index2'])->name('results.remedial')->middleware(['forbidden','forbidden_employee']);
     Route::get('exam_result/all', [\App\Http\Controllers\Student\SubjectExamStudentResultController::class, 'index'])->name('exam_result.all');
-    Route::get('exportSubjectExamStudentResult', [SubjectExamStudentResultController::class, 'exportSubjectExamStudentResult'])->name('exportSubjectExamStudentResult')->middleware('forbidden');
-    Route::post('importSubjectExamStudentResult', [SubjectExamStudentResultController::class, 'importSubjectExamStudentResult'])->name('importSubjectExamStudentResult')->middleware('forbidden');
+    Route::get('exportSubjectExamStudentResult', [SubjectExamStudentResultController::class, 'exportSubjectExamStudentResult'])->name('exportSubjectExamStudentResult')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importSubjectExamStudentResult', [SubjectExamStudentResultController::class, 'importSubjectExamStudentResult'])->name('importSubjectExamStudentResult')->middleware(['forbidden','forbidden_employee']);
 
     #### document types ####
-    Route::resource('document_types', DocumentTypeController::class)->middleware('forbidden');
-    Route::post('document_types.delete', [DocumentTypeController::class, 'delete'])->name('document_types.delete')->middleware('forbidden');
+    Route::resource('document_types', DocumentTypeController::class)->middleware(['forbidden']);
+    Route::post('document_types.delete', [DocumentTypeController::class, 'delete'])->name('document_types.delete')->middleware(['forbidden']);
 
 
     #### documents ####
     Route::resource('documents', DocumentController::class)->except(['edit', 'update', 'show']);
-    Route::post('documents.delete', [DocumentController::class, 'delete'])->name('documents.delete')->middleware('forbidden');
-    Route::post('documents/processing', [DocumentController::class, 'processing'])->name('documents.processing')->middleware('forbidden');
+    Route::post('documents.delete', [DocumentController::class, 'delete'])->name('documents.delete')->middleware(['forbidden']);
+    Route::post('documents/processing', [DocumentController::class, 'processing'])->name('documents.processing')->middleware(['forbidden']);
     Route::get('documents/student', [DocumentController::class, 'documentsStudent'])->name('documents.student');
-    Route::get('exportDocument', [DocumentController::class, 'exportDocument'])->name('exportDocument')->middleware('forbidden');
-    Route::post('importDocument', [DocumentController::class, 'importDocument'])->name('importDocument')->middleware('forbidden');
+    Route::get('exportDocument', [DocumentController::class, 'exportDocument'])->name('exportDocument')->middleware(['forbidden']);
+    Route::post('importDocument', [DocumentController::class, 'importDocument'])->name('importDocument')->middleware(['forbidden']);
 
 
     #### Process Exam ####
     Route::resource('process_exams', ProcessExamController::class);
     Route::get('process_examss/students/{id}', [ProcessExamController::class, 'processExamStudent'])->name('processExamStudent');
     Route::post('updateRequestStatus/', [ProcessExamController::class, 'updateRequestStatus'])->name('updateRequestStatus');
-    Route::get('exportProcess', [ProcessExamController::class, 'exportProcess'])->name('exportProcess')->middleware('forbidden');
-    Route::post('importProcess', [ProcessExamController::class, 'importProcess'])->name('importProcess')->middleware('forbidden');
+    Route::get('exportProcess', [ProcessExamController::class, 'exportProcess'])->name('exportProcess')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importProcess', [ProcessExamController::class, 'importProcess'])->name('importProcess')->middleware(['forbidden','forbidden_employee']);
 
 
 
@@ -273,9 +269,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
     Route::get('process_degrees_normal', [ProcessDegreeController::class, 'normal'])->name('process_degrees.normal');
     Route::get('process_degrees_catchUp', [ProcessDegreeController::class, 'catchUp'])->name('process_degrees.catchUp');
     Route::get('process_degreess/students', [ProcessDegreeController::class, 'processDegreeStudent'])->name('processDegreeStudent');
-    Route::post('RequestStatusDegree/', [ProcessDegreeController::class, 'RequestStatusDegree'])->name('RequestStatusDegree')->middleware('forbidden');
-    Route::get('/updateDegree_edit/{id}', [ProcessDegreeController::class, 'editUpdateDegree'])->name('editUpdateDegree')->middleware('forbidden');
-    Route::post('updateDegree', [ProcessDegreeController::class, 'updateDegree'])->name('updateDegree')->middleware('forbidden');
+    Route::post('RequestStatusDegree/', [ProcessDegreeController::class, 'RequestStatusDegree'])->name('RequestStatusDegree')->middleware(['forbidden','forbidden_employee']);
+    Route::get('/updateDegree_edit/{id}', [ProcessDegreeController::class, 'editUpdateDegree'])->name('editUpdateDegree')->middleware(['forbidden','forbidden_employee']);
+    Route::post('updateDegree', [ProcessDegreeController::class, 'updateDegree'])->name('updateDegree')->middleware(['forbidden','forbidden_employee']);
 
     #### Subject Exam Student Result ####
     Route::resource('subject_exam_student_result', SubjectExamStudentResultController::class);
@@ -334,19 +330,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
 
 
     #### Event ####
-    Route::resource('events', EventController::class)->middleware('forbidden');
+    Route::resource('events', EventController::class)->middleware(['forbidden','forbidden_employee']);
 
     #### Doctors ####
-    Route::resource('doctors', DoctorsController::class)->middleware('forbidden');
-    Route::post('doctors.delete', [DoctorsController::class, 'delete'])->name('doctors.delete')->middleware('forbidden');
-    Route::get('exportDoctor', [DoctorsController::class, 'exportDoctor'])->name('exportDoctor')->middleware('forbidden');
-    Route::post('importDoctor', [DoctorsController::class, 'importDoctor'])->name('importDoctor')->middleware('forbidden');
+    Route::resource('doctors', DoctorsController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::post('doctors.delete', [DoctorsController::class, 'delete'])->name('doctors.delete')->middleware(['forbidden','forbidden_employee']);
+    Route::get('exportDoctor', [DoctorsController::class, 'exportDoctor'])->name('exportDoctor')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importDoctor', [DoctorsController::class, 'importDoctor'])->name('importDoctor')->middleware(['forbidden','forbidden_employee']);
 
 
     #### schedules ####
-    Route::resource('schedules', ScheduleController::class)->middleware('forbidden');
+    Route::resource('schedules', ScheduleController::class)->middleware(['forbidden','forbidden_employee']);
     Route::get('schedules-of-students', [\App\Http\Controllers\Student\ScheduleController::class, 'allSchedules'])->name('schedules.students.all');
-    Route::post('schedules/delete', [ScheduleController::class, 'delete'])->name('schedules.delete')->middleware('forbidden');
+    Route::post('schedules/delete', [ScheduleController::class, 'delete'])->name('schedules.delete')->middleware(['forbidden','forbidden_employee']);
 
 
     #### periods ####
@@ -356,19 +352,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale() . '/dashboard', 'midd
     });
 
     #### subject of doctor ####
-    Route::get('subject', [\App\Http\Controllers\Doctor\SubjectController::class, 'index'])->name('dashboard.subject')->middleware('forbidden');
+    Route::get('subject', [\App\Http\Controllers\Doctor\SubjectController::class, 'index'])->name('dashboard.subject')->middleware(['forbidden','forbidden_employee']);
 
     #### Reasons for redress ####
-    Route::resource('reasons_redress', ReasonRedresseController::class)->middleware('forbidden');
+    Route::resource('reasons_redress', ReasonRedresseController::class)->middleware(['forbidden','forbidden_employee']);
 
     #### Certificate Name ####
-    Route::resource('certificate_name', CertificateTypeController::class)->middleware('forbidden');
+    Route::resource('certificate_name', CertificateTypeController::class)->middleware(['forbidden','forbidden_employee']);
 
 
     #### Point Statement ####
-    Route::resource('points', PointStatementController::class)->middleware('forbidden');
-    Route::get('exportPointStatement', [PointStatementController::class, 'exportPointStatement'])->name('exportPointStatement')->middleware('forbidden');
-    Route::post('importPointStatement', [PointStatementController::class, 'importPointStatement'])->name('importPointStatement')->middleware('forbidden');
+    Route::resource('points', PointStatementController::class)->middleware(['forbidden','forbidden_employee']);
+    Route::get('exportPointStatement', [PointStatementController::class, 'exportPointStatement'])->name('exportPointStatement')->middleware(['forbidden','forbidden_employee']);
+    Route::post('importPointStatement', [PointStatementController::class, 'importPointStatement'])->name('importPointStatement')->middleware(['forbidden','forbidden_employee']);
 
     #### Re Record The Track ####
     Route::get('reregisterForm', [ReRecordTheTrackController::class, 'reregisterForm'])->name('reregisterForm');

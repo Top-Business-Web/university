@@ -58,7 +58,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'namespace' => 'fron
     }
 );
 
-Route::view('404','errors.404');
-Route::view('500','errors.500');
+#### error pages ####
+Route::view('404','errors.404')->name('404');
+Route::view('500','errors.500')->name('500');
+Route::view('403','errors.403')->name('403');
 
 
