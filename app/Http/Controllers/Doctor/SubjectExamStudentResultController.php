@@ -40,7 +40,7 @@ class SubjectExamStudentResultController extends Controller
                 ->get();
             $subject_exam_student_results = $subject_exam_student_results->concat($data);
         }
-
+        
         if ($request->ajax()) {
 
             return Datatables::of($subject_exam_student_results)
@@ -60,7 +60,7 @@ class SubjectExamStudentResultController extends Controller
 
                     return @SubjectExamStudent::query()
                         ->where('year', '=', period()->year_start)
-                        ->where('period', '=', period()->period)
+                        ->where('session', '=', $subject_exam_student_results->period)
                         ->where('user_id',$subject_exam_student_results->user_id)
                         ->with('subject_exam')
                         ->whereHas('subject_exam', function ($query) use ($subject_exam_student_results) {
