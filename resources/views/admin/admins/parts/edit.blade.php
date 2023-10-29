@@ -69,7 +69,9 @@
                 <option value="">{{ trans('admin.select') }}</option>
                 <option class="form-control" value="manger" {{$admin->user_type == 'manger' ? 'selected' : ''}}>@lang('login.manger')</option>
                 <option class="form-control" value="employee" {{$admin->user_type == 'employee' ? 'selected' : ''}}>@lang('login.employee')</option>
-                <option class="form-control" value="factor" {{$admin->user_type == 'factor' ? 'selected' : ''}}>@lang('login.factor')</option>
+                <option class="form-control" value="window" {{$admin->user_type == 'window' ? 'selected' : ''}}>@lang('login.window')</option>
+                <option class="form-control" value="treasury" {{$admin->user_type == 'treasury' ? 'selected' : ''}}>@lang('login.treasury')</option>
+                <option class="form-control" value="division" {{$admin->user_type == 'division' ? 'selected' : ''}}>@lang('login.division')</option>
             </select>
         </div>
 

@@ -30,7 +30,9 @@ return [
     'doctor' => 'professeur',
     'manger' => 'employé général',
     'employee' => 'administration',
-    'factor' => 'net',
+    'window' => 'fenêtre',
+    'treasury' => 'trésor',
+    'division' => 'division',
 
     'This mail is not registered' => 'Ce courrier n\'est pas enregistré',
     'Please enter your e-mail' => 'Veuillez saisir votre e-mail',

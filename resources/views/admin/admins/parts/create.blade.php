@@ -69,7 +69,9 @@
                 <option value="" selected>{{ trans('admin.select') }}</option>
                 <option class="form-control" value="manger">@lang('login.manger')</option>
                 <option class="form-control" value="employee">@lang('login.employee')</option>
-                <option class="form-control" value="factor">@lang('login.factor')</option>
+                <option class="form-control" value="window">@lang('login.window')</option>
+                <option class="form-control" value="treasury">@lang('login.treasury')</option>
+                <option class="form-control" value="division">@lang('login.division')</option>
             </select>
         </div>
 

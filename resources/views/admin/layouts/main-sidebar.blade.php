@@ -162,7 +162,8 @@
                 <a class="side-menu__item" data-toggle="slide" href="#">
                     <i class="fe fe-repeat side-menu__icon"></i>
                     <span class="side-menu__label">{{ trans('admin.Document requests') }}
-                    <div style="width: 30px;height: 30px;border-radius: 50%;background: #56d094;color: #fff;display: inline-block;padding: 6px;text-align: center">{{documentCount()}}</div>
+                    <div
+                        style="width: 30px;height: 30px;border-radius: 50%;background: #56d094;color: #fff;display: inline-block;padding: 6px;text-align: center">{{documentCount()}}</div>
                     </span><i
                         class="angle fa fa-angle-right"></i>
                 </a>
@@ -293,13 +294,13 @@
                     </li>
                 </ul>
             </li>
-                <li class="slide">
-                    <a class="side-menu__item" href="{{route('process_degrees.index')}}">
-                        <i class="fe fe-file-text side-menu__icon"></i>
-                        <span class="side-menu__label">{{ trans('student_sidebar.process_degree') }} <div
+            <li class="slide">
+                <a class="side-menu__item" href="{{route('process_degrees.index')}}">
+                    <i class="fe fe-file-text side-menu__icon"></i>
+                    <span class="side-menu__label">{{ trans('student_sidebar.process_degree') }} <div
                             style="width: 30px;height: 30px;border-radius: 50%;background: #56d094;color: #fff;display: inline-block;padding: 6px;text-align: center">{{processDegreeRequestCount()}}</div></span>
-                    </a>
-                </li>
+                </a>
+            </li>
 
             <li class="slide">
                 <a class="side-menu__item" data-toggle="slide" href="#">
@@ -332,7 +333,8 @@
                 <a class="side-menu__item" href="{{ route('data_modify.index') }}">
                     <i class="fe fe-rewind side-menu__icon"></i>
                     <span class="side-menu__label">{{ trans('admin.data_modify') }}</span>
-                    <div style="width: 30px;height: 30px;border-radius: 50%;background: #56d094;color: #fff;display: inline-block;padding: 6px;text-align: center">{{dataModificationCount()}}</div>
+                    <div
+                        style="width: 30px;height: 30px;border-radius: 50%;background: #56d094;color: #fff;display: inline-block;padding: 6px;text-align: center">{{dataModificationCount()}}</div>
 
 
                 </a>
@@ -380,12 +382,12 @@
 
 
 
-{{--            <li class="slide">--}}
-{{--                <a class="side-menu__item" href="{{route('subject_student.index')}}">--}}
-{{--                    <i class="fe fe-save side-menu__icon"></i>--}}
-{{--                    <span class="side-menu__label">{{ trans('admin.all_subject_students') }}</span>--}}
-{{--                </a>--}}
-{{--            </li>--}}
+            {{--            <li class="slide">--}}
+            {{--                <a class="side-menu__item" href="{{route('subject_student.index')}}">--}}
+            {{--                    <i class="fe fe-save side-menu__icon"></i>--}}
+            {{--                    <span class="side-menu__label">{{ trans('admin.all_subject_students') }}</span>--}}
+            {{--                </a>--}}
+            {{--            </li>--}}
 
 
 
@@ -592,6 +594,58 @@
                 </a>
             </li>
 
-    @endif
+        @endif
         {{-------------------------- end region manager - العميد ------------------------}}
+
+        @if(checkUser('window'))
+            {{--   start Document requests  --}}
+            <li class="slide">
+                <a class="side-menu__item" data-toggle="slide" href="#">
+                    <i class="fe fe-repeat side-menu__icon"></i>
+                    <span class="side-menu__label">{{ trans('admin.Document requests') }}
+                    <div
+                        style="width: 30px;height: 30px;border-radius: 50%;background: #56d094;color: #fff;display: inline-block;padding: 6px;text-align: center">{{documentCount()}}</div>
+                    </span><i
+                        class="angle fa fa-angle-right"></i>
+                </a>
+                <ul class="slide-menu">
+                    <li><a href="{{ route('document_types.index') }}"
+                           class="slide-item">@lang('admin.document_types')</a>
+                    </li>
+                    <li><a href="{{ route('documents.index') }}"
+                           class="slide-item">@lang('admin.Document requests')</a>
+                    </li>
+                </ul>
+            </li>
+            {{--   end Document requests  --}}
+        @endif
+
+        @if(checkUser('treasury'))
+            {{--   start Diploma certificates  --}}
+
+            <li class="slide">
+                <a class="side-menu__item" data-toggle="slide" href="#">
+                    <i class="fe fe-user-check side-menu__icon"></i>
+                    <span
+                        class="side-menu__label">{{ trans('admin.Those_concerned_with_evidence_and_diploma') }}</span><i
+                        class="angle fa fa-angle-right"></i>
+                </a>
+                <ul class="slide-menu">
+                    <li><a href="{{ route('certificates.index') }}"
+                           class="slide-item">{{ trans('admin.Diploma certificates') }}</a></li>
+                </ul>
+            </li>
+
+            {{--   end Diploma certificates  --}}
+        @endif
+
+        @if(checkUser('division'))
+
+                <li class="slide">
+                    <a class="side-menu__item" href="{{ route('subject_unit_doctor.index') }}">
+                        <i class="fe fe-user-check side-menu__icon"></i>
+                        <span class="side-menu__label">{{ trans('admin.subject_unit_doctors') }}</span>
+                    </a>
+                </li>
+       @endif
 </aside>

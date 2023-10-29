@@ -30,8 +30,9 @@ return [
     'doctor' => 'professor',
     'manger' => 'general clerk',
     'employee' => 'administration',
-    'factor' => 'net',
-
+    'window' => 'window',
+    'treasury' => 'treasury',
+    'division' => 'division',
     'This mail is not registered' =>'This mail is not registered',
     'Please enter your e-mail' =>'Please enter your e-mail',
     'Please enter your password' => 'Please enter your password',

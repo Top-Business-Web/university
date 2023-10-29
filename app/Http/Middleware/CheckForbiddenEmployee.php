@@ -8,21 +8,25 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
-class CheckForbidden
+class CheckForbiddenEmployee
 {
     /**
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param  Closure(Request): (Response|RedirectResponse)  $next
+     * @param Closure(Request): (Response|RedirectResponse) $next
      * @return Response|RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
         $userType = Auth::user()->user_type;
-        if($userType == 'student'){
+
+        $restrictedRoles = ['window', 'treasury', 'division'];
+
+        if (in_array($userType, $restrictedRoles)) {
             return redirect()->route('403');
         }
+
         return $next($request);
     }
 }

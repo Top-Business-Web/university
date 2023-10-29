@@ -31,7 +31,9 @@ return [
     'doctor' => ' الاستاذ',
     'manger' => 'العميد - الكاتب العام',
     'employee' => 'الاداره',
-    'factor' => 'الشباك',
+    'window' => 'الشباك',
+    'treasury' => 'الخزانة',
+    'division' => 'الشعبة',
 
     'This mail is not registered' => 'هذا البريد غير مسجل',
     'Please enter your e-mail' => 'يرجي ادخال البريد الالكتروني',
