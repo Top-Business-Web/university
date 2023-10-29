@@ -116,7 +116,7 @@
 
             .print-div td {
                 padding: 1px !important;
-                font-size: .65rem !important;
+                font-size: 0.65rem !important;
             }
 
             .p-5 {
