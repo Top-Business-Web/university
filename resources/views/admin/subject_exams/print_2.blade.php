@@ -19,35 +19,24 @@
         rel="stylesheet" />
 
     <style>
-        .dataTables_filter {
+
+        .dataTables_filter{
+            display: none;
+        }
+        .dataTables_length{
+            display: none;
+        }
+        .dataTables_info{
+            display: none;
+        }
+        .dataTables_paginate{
             display: none;
         }
 
-        .dataTables_length {
-            display: none;
-        }
-
-        .dataTables_info {
-            display: none;
-        }
-
-        .dataTables_paginate {
-            display: none;
-        }
-
-        table.dataTable thead .sorting:before,
-        table.dataTable thead .sorting_asc:before,
-        table.dataTable thead .sorting_desc:before,
-        table.dataTable thead .sorting_asc_disabled:before,
-        table.dataTable thead .sorting_desc_disabled:before {
+        table.dataTable thead .sorting:before, table.dataTable thead .sorting_asc:before, table.dataTable thead .sorting_desc:before, table.dataTable thead .sorting_asc_disabled:before, table.dataTable thead .sorting_desc_disabled:before{
             display: none !important;
         }
-
-        table.dataTable thead .sorting:after,
-        table.dataTable thead .sorting_asc:after,
-        table.dataTable thead .sorting_desc:after,
-        table.dataTable thead .sorting_asc_disabled:after,
-        table.dataTable thead .sorting_desc_disabled:after {
+        table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
             display: none !important;
         }
 
@@ -107,18 +96,13 @@
             }
 
             @page {
-                size: A4 landscape;
+                size: A4 portrait;
                 margin: 5mm; /* You can adjust the margin as needed */
             }
-            .logo-stud{
-                width: 90px !important;
-                height: 90px !important;
-            }
-
             .divPrint {
-                width: 100px !important;
-                bottom: 14px;
-                position: relative;
+                /*width: 100px !important;*/
+                /*bottom: 14px;*/
+                /*position: relative;*/
             }
 
             .table td {
@@ -127,7 +111,7 @@
 
             .print-div td {
                 padding: 1px !important;
-                font-size: .65rem !important;
+                font-size: 0.65rem !important;
             }
 
             .p-5 {
@@ -141,10 +125,10 @@
                 width: 90px !important;
             }
             .mb-4 {
-                margin-bottom: 0px;
+                margin-bottom: 20px;
             }
             .mt-4 {
-                margin-top: 0px !important;
+                margin-top: 20px !important;
             }
             .image-logo1 {
                 margin-bottom: 0px;
@@ -157,19 +141,19 @@
 
 <body>
     <div class="section text-right">
-        <div class="container">
+        <div class="container-fluid">
             <div class="border1" id="divPrint">
                 <div class="border2">
                     <div class="border3">
                         <div class="p-5">
                             <div class="row">
-                                <div class="left_section_1 col-6">
+                                <div class="left_section_1 col-6 mt-3 mb-4">
                                     <h5 class="mb-2 print">استدعاء الامتحانات</h5>
                                     <p>{{ period()->year_start }}: {{ period()->year_end }}</p>
                                     <h6 class="mb-4 print">{{ period()->period }}</h6>
                                 </div>
                                 <!--end left_section_1 -->
-                                <div class="image-logo1 right_section_1 col-6">
+                                <div class="image-logo1 right_section_1 col-6 mt-3 mb-4">
                                     <img src="{{ asset('/uploads/university_setting/' . $university_settings->logo) }}" />
                                 </div>
                                 <!--end right_section_1 -->
@@ -212,7 +196,7 @@
                                     </table>
                                 </div>
                                 <div class=" col-2 d-flex justify-content-center divPrint">
-                                    {!! QrCode::size(120)->generate(route('/')) !!}
+                                    {!! QrCode::size(90)->generate(route('/')) !!}
                                 </div>
                             </div>
                             <!--End Row -->
@@ -271,7 +255,7 @@
                             <!--End table -->
 
                             <div class="d-flex justify-content-between">
-                                <p class="mt-4 mb-3 fw-bold">
+                                <p class="mt-5 mb-5 fw-bold lh-lg">
                                     تنبيهات:
                                     <br>• الحضور الي مقر الا متحانات نصف ساعة قبل الموعد المحدد.
                                     <br>• يمنع منعا كليا ادخال او استعمال الهاتف النقال والاجهزه الالكترونية داخل قاعات
@@ -281,8 +265,8 @@
                                 </p>
 
 
-                                <div class="">
-                                    <div class="">
+                                <div class="mt-5">
+                                    <div class="mb-3">
                                         <div>ختم المؤسسة</div>
                                     </div>
                                     <div>
