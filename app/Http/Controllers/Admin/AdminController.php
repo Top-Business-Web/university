@@ -109,7 +109,7 @@ class AdminController extends Controller
 
     public function create()
     {
-        $types = ['doctor', 'employee', 'manger', 'factor'];
+        $types = ['doctor', 'employee', 'manger', 'window','treasury','division'];
 
         return view('admin.admins.parts.create', compact('types'));
     }
@@ -149,7 +149,7 @@ class AdminController extends Controller
     public function edit(User $admin)
     {
 
-        $types = ['doctor', 'employee', 'manger', 'factor'];
+        $types = ['doctor', 'employee', 'manger', 'window','treasury','division'];
 
         return view('admin.admins.parts.edit', compact('admin', 'types'));
     }
