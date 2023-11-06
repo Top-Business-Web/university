@@ -31,7 +31,7 @@ class AdminStoreRequest extends FormRequest
             'last_name_latin' => 'required',
             'password' => 'required|min:6',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif',
-            'user_type' => 'required|in:manger,employee,factor',
+            'user_type' => 'required',
             'job_id' => 'nullable|unique:users,job_id',
         ];
     }
