@@ -10588,7 +10588,7 @@ textarea.form-control {
 .header .dropdown-menu {
   padding: 0;
   border: 0;
-  top: 50px !important; }
+  top: 0px !important; }
 
 .header .bg-image {
   background: linear-gradient(to right bottom, rgba(132, 65, 246, 0.7), rgba(212, 40, 234, 0.7));

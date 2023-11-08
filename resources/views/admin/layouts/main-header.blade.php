@@ -3,8 +3,8 @@
     <div class="container-fluid">
         <div class="d-flex">
             <a class="header-brand d-md-none" href="#">
-                <img src="{{ asset('assets/logo/university.png') }}" class="header-brand-img mobile-icon" alt="logo">
-                <img src="{{ asset('assets/logo/download.jfif') }}" class="header-brand-img desktop-logo mobile-logo"
+                <img src="{{ asset('uploads/university_setting/'. $university_settings->logo) }}" class="header-brand-img mobile-icon" alt="logo">
+                <img src="{{ asset('uploads/university_setting/'. $university_settings->logo) }}" class="header-brand-img desktop-logo mobile-logo"
                      alt="logo">
             </a>
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#">
@@ -120,7 +120,7 @@
                         <span id="nav-span">
                         </span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                    <div class="dropdown-menu dropdown-menu-{{ lang() == 'ar' ? 'left' : 'right' }} dropdown-menu-arrow">
                         {{--                        @foreach ($contacts as $contact) --}}
                         {{--                        <a href="{{route('contact_us.index')}}" class="dropdown-item d-flex {{($loop->iteration == 1) ? 'mt-2' : ''}} pb-3"> --}}
                         {{--                            <span class="avatar avatar-md brround mr-3">{{$contact->first_name[0]}}</span> --}}

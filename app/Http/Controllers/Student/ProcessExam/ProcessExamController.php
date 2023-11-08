@@ -93,7 +93,7 @@ class ProcessExamController extends Controller{
 
 
             $deadline = Deadline::query()
-                ->where('deadline_type',0)
+                ->where('deadline_type','=',0)
                 ->where('deadline_date_start','<=', Carbon::now())
                 ->where('deadline_date_end','>=', Carbon::now())
                 ->where('year','=',period()->year_start)

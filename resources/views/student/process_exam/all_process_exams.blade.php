@@ -11,18 +11,32 @@
     <div class="row">
         <div class="col-md-12 col-lg-12">
             <div class="card">
-                @if($processExamCount >  0)
-                    @else
+                @if($deadline ==  0)
                     <div class="card-header">
                         <h3 class="card-title"></h3>
                         <div class="">
-                            <button class="btn btn-secondary btn-icon text-white addBtn">
+                            <button class="btn btn-danger btn-icon text-white ">
 									<span>
-										<i class="fe fe-plus"></i>
-									</span> {{ trans('process_exam.add_process_exam') }}
+										<i class="fe fe-stop-circle"></i>
+									</span> {{ trans('student_result.cancel_request_button') }}
                             </button>
                         </div>
                     </div>
+                @else
+                    @if($processExamCount > 0)
+
+                    @else
+                        <div class="card-header">
+                            <h3 class="card-title"></h3>
+                            <div class="">
+                                <button class="btn btn-secondary btn-icon text-white addBtn">
+                                        <span>
+                                            <i class="fe fe-plus"></i>
+                                        </span> {{ trans('process_exam.add_process_exam') }}
+                                </button>
+                            </div>
+                        </div>
+                    @endif
                 @endif
 
 
@@ -50,7 +64,7 @@
             </div>
 
             <!--Delete MODAL -->
-            <div class="modal fade" id="delete_modal"  role="dialog" aria-labelledby="exampleModalLabel"
+            <div class="modal fade" id="delete_modal" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -65,10 +79,12 @@
                             <p>{{ trans('admin.sure_delete') }} ? ["<span id="title" class="text-danger"></span>"]</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" id="dismiss_delete_modal">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    id="dismiss_delete_modal">
                                 {{ trans('admin.close') }}
                             </button>
-                            <button type="button" class="btn btn-danger" id="delete_btn">{{ trans('admin.delete') }}</button>
+                            <button type="button" class="btn btn-danger"
+                                    id="delete_btn">{{ trans('admin.delete') }}</button>
                         </div>
                     </div>
                 </div>
@@ -77,11 +93,13 @@
 
 
             <!-- Create Or Edit Modal -->
-            <div class="modal fade bd-example-modal-lg" id="editOrCreate" data-backdrop="static"  role="dialog" aria-hidden="true">
+            <div class="modal fade bd-example-modal-lg" id="editOrCreate" data-backdrop="static" role="dialog"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="example-Modal3"> {{ trans('process_exam.add_process_exam') }}</h5>
+                            <h5 class="modal-title"
+                                id="example-Modal3"> {{ trans('process_exam.add_process_exam') }}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -117,9 +135,8 @@
                 showAddModal('{{route('create-process-exam')}}');
 
 
-
                 function addScriptProcss() {
-                    $(document).on('submit', 'Form#addForm', function(e) {
+                    $(document).on('submit', 'Form#addForm', function (e) {
                         e.preventDefault();
                         var formData = new FormData(this);
                         var url = $('#addForm').attr('action');
@@ -127,36 +144,36 @@
                             url: url,
                             type: 'POST',
                             data: formData,
-                            beforeSend: function() {
+                            beforeSend: function () {
                                 $('#addButton').html('<span class="spinner-border spinner-border-sm mr-2" ' +
                                     ' ></span> <span style="margin-left: 4px;">{{ trans('admin.wait') }} ..</span>').attr(
                                     'disabled', true);
                             },
-                            success: function(data) {
+                            success: function (data) {
                                 if (data.status == 200) {
                                     window.location.reload();
                                     toastr.success(' {{ trans('admin.added_successfully') }} ');
                                 } else if (data.status == 405) {
                                     toastr.error(data.mymessage);
-                                } else if(data.status == 411){
+                                } else if (data.status == 411) {
                                     toastr.error(data.mymessage);
-                                }else if(data.status == 412){
+                                } else if (data.status == 412) {
                                     toastr.error('لا يصلح تسجيل هذا الطالب في فوج ثاني');
-                                }else if(data.status == 413){
+                                } else if (data.status == 413) {
                                     toastr.error(data.mymessage);
-                                }else
+                                } else
                                     toastr.error(' {{ trans('admin.something_went_wrong') }} ..');
                                 $('#addButton').html(`{{ trans('admin.add') }}`).attr('disabled', false);
                                 $('#editOrCreate').modal('hide')
                             },
-                            error: function(data) {
+                            error: function (data) {
                                 if (data.status === 500) {
                                     toastr.error(' {{ trans('admin.something_went_wrong') }} ..');
                                 } else if (data.status === 422) {
                                     var errors = $.parseJSON(data.responseText);
-                                    $.each(errors, function(key, value) {
+                                    $.each(errors, function (key, value) {
                                         if ($.isPlainObject(value)) {
-                                            $.each(value, function(key, value) {
+                                            $.each(value, function (key, value) {
                                                 toastr.error(value, '{{ trans('admin.wrong') }}');
                                             });
                                         }
@@ -174,7 +191,6 @@
                 }
 
                 addScriptProcss();
-
 
 
             </script>
