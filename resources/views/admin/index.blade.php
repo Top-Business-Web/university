@@ -112,7 +112,7 @@
 
 
 
-        @if(checkUser('manger') || checkUser('doctor') || checkUser('employee'))
+        @if(auth()->user()->user_type != 'student')
 
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
                 <div class="card bg-success img-card box-success-shadow">

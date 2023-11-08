@@ -8,11 +8,11 @@
         <!-- LOGO -->
     </div>
     <ul class="side-menu">
-        @if (checkUser('manger') || checkUser('employee')|| checkUser('student') || checkUser('doctor'))
+{{--        @if (auth()->user()->user_type != 'student')--}}
             <li>
                 <h3><a href="{{ route('admin.home') }}">{{ trans('admin.dashboard') }}</a></h3>
             </li>
-        @endif
+{{--        @endif--}}
 
         {{-------------------------- start region doctor - الدكتور ------------------------}}
         @if (checkUser('doctor'))

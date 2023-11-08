@@ -31,13 +31,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        if (\auth()->user()->user_type == 'window'){
-            return redirect()->route('documents.index');
-        } elseif (\auth()->user()->user_type == 'treasury'){
-            return redirect()->route('certificates.index');
-        }elseif (\auth()->user()->user_type == 'division'){
-            return redirect()->route('subject_unit_doctor.index');
-        }
         $user_count = User::query()
             ->where('user_type', '=', 'student')
             ->orderBy('university_register_year','asc')
