@@ -15,7 +15,7 @@ class Certificate extends Model
     use HasFactory;
     use HasTranslations;
 
-    public array $translatable = ['description_situation_with_management','description_situation_with_treasury'];
+    public array $translatable = ['description_situation_with_management','description_situation_with_management','description_situation_with_treasury'];
 
     protected $fillable = [
 
