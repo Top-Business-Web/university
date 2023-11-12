@@ -9,15 +9,15 @@
                 <div class="col-md-12 mt-3">
                     <label for="user_id" class="form-control-label">{{trans('admin.situation_with_management')}}</label>
                     <select class="form-control" name="situation_with_management" id="situation_with_management">
-                        <option value="" selected disabled>@lang('admin.select')</option>
-                            <option value="1">{{trans('admin.no_problem')}}</option>
-                            <option value="0">{{trans('admin.problem')}}</option>
+                        <option value="" disabled>@lang('admin.select')</option>
+                            <option {{($certificate->situation_with_management == 1 ? 'selected' : '')}} value="1">{{trans('admin.no_problem')}}</option>
+                            <option {{($certificate->situation_with_management == 0 ? 'selected' : '')}} value="0">{{trans('admin.problem')}}</option>
                     </select>
                 </div>
 
                 <div class="col-md-12 mt-3">
                     <label for="category_name" class="form-control-label">{{ trans('admin.description_situation_with_management_ar') }}</label>
-                    <input type="text" class="form-control" name="description_situation_with_management_ar" id="description_situation_with_management_ar" value="{{$certificate->getTranslation('description_situation_with_management', 'ar')}}">
+                    <input type="text" class="form-control" name="description_situation_with_management_ar" id="description_situation_with_management_ar" value="{{ $certificate->getTranslation('description_situation_with_management', 'ar') }}">
                 </div>
 
 
@@ -38,9 +38,9 @@
                 <div class="col-md-12 mt-3">
                     <label for="user_id" class="form-control-label">{{trans('admin.situation_with_treasury')}}</label>
                     <select class="form-control" name="situation_with_treasury" id="situation_with_treasury">
-                        <option value="" selected disabled>@lang('admin.select')</option>
-                        <option value="1">{{trans('admin.no_problem')}}</option>
-                        <option value="0">{{trans('admin.problem')}}</option>
+                        <option value="" disabled>@lang('admin.select')</option>
+                        <option {{($certificate->situation_with_treasury == 1 ? 'selected' : '')}}  value="1">{{trans('admin.no_problem')}}</option>
+                        <option {{($certificate->situation_with_treasury == 0 ? 'selected' : '')}}  value="0">{{trans('admin.problem')}}</option>
                     </select>
                 </div>
 
@@ -72,7 +72,7 @@
                             <option value="{{ $year }}">{{ $year }}</option>
                         @endfor
                     </select> --}}
-                    <input type="number" name="validation_year" class="form-control">
+                    <input type="number" name="validation_year" value="{{ $certificate->validation_year }}" class="form-control">
                 </div>
 
 
@@ -83,7 +83,7 @@
                             <option value="{{ $year }}">{{ $year }}</option>
                         @endfor
                     </select> --}}
-                    <input type="number" name="year" class="form-control">
+                    <input type="number" name="year" class="form-control" value="{{$certificate->year }}">
                 </div>
             </div>
         </div>

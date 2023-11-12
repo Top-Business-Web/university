@@ -18,8 +18,13 @@ class ProcessExamController extends Controller{
 
     public function get_all_process_exams(request $request)
     {
-
-
+        $deadline = Deadline::query()
+        ->where('deadline_type','=',0)
+        ->where('deadline_date_start','<=', Carbon::now())
+        ->where('deadline_date_end','>=', Carbon::now())
+        ->where('year','=',period()->year_start)
+        ->where('period','=', period()->period)
+        ->count();
         if ($request->ajax()) {
 
             $process_exams = ProcessExam::query()
@@ -29,22 +34,28 @@ class ProcessExamController extends Controller{
                 ->latest()
                 ->get();
 
+                
+
             return Datatables::of($process_exams)
 
 
-                ->addColumn('action', function ($process_exams) {
+                ->addColumn('action', function ($process_exams) use ($deadline) {
 
-                    if($process_exams->request_status == 'new'){
-
-                        return '
-                            <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
-                                    data-id="' . $process_exams->id . '" data-title="' . $process_exams->user->first_name . '">
-                                    <i class="fas fa-trash"></i>
-                            </button>
-                       ';
-                    } else{
-
+                    if($deadline == 0) {
                         return 'Not Delete Access';
+                    }else{
+                        if($process_exams->request_status == 'new'){
+
+                            return '
+                                <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
+                                        data-id="' . $process_exams->id . '" data-title="' . $process_exams->user->first_name . '">
+                                        <i class="fas fa-trash"></i>
+                                </button>
+                           ';
+                        } else{
+    
+                            return 'Not Delete Access';
+                        }
                     }
 
                 })

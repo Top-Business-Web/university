@@ -26,8 +26,14 @@ class ProcessDegreeController extends Controller
 
     public function get_all_process_degrees(request $request)
     {
-
-
+        $processing_request = Deadline::query()
+        ->where('deadline_type',1)
+            ->where('deadline_date_start','<=', Carbon::now())
+            ->where('deadline_date_end','>=', Carbon::now())
+            ->where('year','=',period()->year_start)
+            ->where('period','=', period()->period)
+            ->count();
+        
         if ($request->ajax()) {
 
             $process_degrees = ProcessDegree::query()
@@ -38,21 +44,22 @@ class ProcessDegreeController extends Controller
 
 
             return Datatables::of($process_degrees)
-                ->addColumn('action', function ($process_degrees) {
+                ->addColumn('action', function ($process_degrees) use ($processing_request) {
 
-
-                    if ($process_degrees->request_status == 'new') {
-
-                        return '
-                            <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
-                                    data-id="' . $process_degrees->id . '" data-title="' . $process_degrees->user->first_name . '">
-                                    <i class="fas fa-trash"></i>
-                            </button>
-                       ';
-                    } else {
-
+                    if($processing_request == 0){
                         return 'Delete Not Access';
-                    }
+                    }else {
+                        if ($process_degrees->request_status == 'new') {
+                            return '
+                                <button class="btn btn-pill btn-danger-light" data-toggle="modal" data-target="#delete_modal"
+                                        data-id="' . $process_degrees->id . '" data-title="' . $process_degrees->user->first_name . '">
+                                        <i class="fas fa-trash"></i>
+                                </button>
+                           ';
+                        } else {
+                            return 'Delete Not Access';
+                        }
+                    }  
 
                 })
                 ->addColumn('exam_number', function ($process_degrees) {
