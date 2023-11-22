@@ -16,7 +16,7 @@ class UserImport implements ToCollection, WithHeadingRow
         for ($i = 0; $i < count($rows); $i++) {
 
             User::updateOrCreate([
-                'id' => $rows[$i]['id'],
+                'identifier_id' => $rows[$i]['identifier_id'],
             ],[
                 'first_name' => $rows[$i]['first_name'],
                 'last_name' => $rows[$i]['last_name'],
