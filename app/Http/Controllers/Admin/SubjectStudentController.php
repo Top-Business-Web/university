@@ -40,9 +40,8 @@ class SubjectStudentController extends Controller
                 ->latest();
 
             return Datatables::of($subject_students)
-
                 ->addColumn('user', function ($subject_exam_students) {
-                    return $subject_exam_students->user->first_name  . ' ' . $subject_exam_students->user->last_name;
+                    return $subject_exam_students->user->first_name . ' ' . $subject_exam_students->user->last_name;
                 })
                 ->addColumn('unit_id', function ($subject_exam_students) {
                     return $subject_exam_students->subject->unit->unit_name;
@@ -89,28 +88,27 @@ class SubjectStudentController extends Controller
         $user = User::query()
             ->where('id', '=', $request->user_id)
             ->first();
-
-        $subject_student = SubjectStudent::query()
-            ->where('period', '=', $request->period)
-            ->where('user_id', '=', $request->user_id)
-            ->where('year', '=', $request->year)
-            ->first();
-
-        if ($request->group_id != $subject_student->group_id) {
-            return response()->json(['status' => 412]);
-        } else {
-            if ($user->subjects()->syncWithPivotValues(
-                $request->subject_id,
-                [
+        for ($index = 0; $index < count($request->subject_id); $index++) {
+            $subjectStudent = SubjectStudent::query()
+                ->updateOrCreate([
+                    'user_id' => $user->id,
                     'group_id' => $request->group_id,
+                    'period' => $request->period,
+                    'subject_id' => $request->subject_id[$index],
+                ], [
                     'year' => $request->year,
-                    'period' => $request->period
-                ]
-            )) {
-                return response()->json(['status' => 200]);
-            } else {
-                return response()->json(['status' => 412]);
-            }
+                    'user_id' => $request->user_id,
+                    'subject_id' => $request->subject_id[$index],
+                    'group_id' => $request->group_id,
+                    'period' => $request->period,
+                ]);
+        }
+
+        if (isset($subjectStudent)) {
+
+            return response()->json(['status' => 200]);
+        } else {
+            return response()->json(['status' => 500]);
         }
     }
 
@@ -157,7 +155,6 @@ class SubjectStudentController extends Controller
                 ->get();
 
             return Datatables::of($subject_students)
-
                 ->addColumn('user_code', function ($subject_exam_students) {
                     return $subject_exam_students->user->identifier_id;
                 })
@@ -167,7 +164,6 @@ class SubjectStudentController extends Controller
                 ->addColumn('group_id', function ($subject_students) {
                     return $subject_students->group->group_name;
                 })
-
                 ->escapeColumns([])
                 ->make(true);
         } else {
